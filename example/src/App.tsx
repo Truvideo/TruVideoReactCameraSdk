@@ -1,13 +1,14 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'truvideo-react-camera-sdk';
+import { cameraInitiate, multiply } from 'truvideo-react-camera-sdk';
 
 export default function App() {
   const [result, setResult] = React.useState<number | undefined>();
 
   React.useEffect(() => {
-    multiply(3, 7).then(setResult);
+   // multiply(3, 7).then(setResult);
+   cameraInitiate().then(setResult);
   }, []);
 
   return (

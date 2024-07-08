@@ -20,3 +20,7 @@ const TruVideoReactCameraSdk = NativeModules.TruVideoReactCameraSdk
 export function multiply(a: number, b: number): Promise<number> {
   return TruVideoReactCameraSdk.multiply(a, b);
 }
+
+export function cameraInitiate(): Promise<number> {
+  return TruVideoReactCameraSdk.cameraInitiate();
+}
