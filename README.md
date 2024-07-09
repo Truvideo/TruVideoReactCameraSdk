@@ -10,7 +10,6 @@ npm install truvideo-react-camera-sdk
 
 ## Usage
 
-
 ```js
 import { multiply } from 'truvideo-react-camera-sdk';
 
@@ -18,7 +17,6 @@ import { multiply } from 'truvideo-react-camera-sdk';
 
 const result = await multiply(3, 7);
 ```
-
 
 ## Contributing
 

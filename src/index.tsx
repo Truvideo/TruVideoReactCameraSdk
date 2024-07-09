@@ -1,4 +1,6 @@
 import { NativeModules, Platform } from 'react-native';
+import type { CameraConfiguration } from './cameraConfigInterface';
+import { LensFacing, FlashMode, Orientation, Mode } from './cameraConfigEnums';
 
 const LINKING_ERROR =
   `The package 'truvideo-react-camera-sdk' doesn't seem to be linked. Make sure: \n\n` +
@@ -20,3 +22,11 @@ const TruVideoReactCameraSdk = NativeModules.TruVideoReactCameraSdk
 export function multiply(a: number, b: number): Promise<number> {
   return TruVideoReactCameraSdk.multiply(a, b);
 }
+
+export function initCameraScreen(
+  configuration: CameraConfiguration
+): Promise<string> {
+  return TruVideoReactCameraSdk.initCameraScreen(JSON.stringify(configuration));
+}
+
+export { LensFacing, FlashMode, Orientation, Mode };

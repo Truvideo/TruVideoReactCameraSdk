@@ -2,6 +2,7 @@ package com.truvideoreactcamerasdk
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.activity.ComponentActivity
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
@@ -68,7 +69,7 @@ class TruVideoReactCameraSdkModule(reactContext: ReactApplicationContext) :
       // If user is authenticated successfully
       TruvideoSdk.initAuthentication()
 //      promise.resolve("Authentication Successful")
-      initCameraScreen(promise)
+      initCameraScreen("",promise)
       // Authentication ready
       // Truvideo SDK its ready to be used
     } catch (exception: Exception) {
@@ -115,7 +116,8 @@ class TruVideoReactCameraSdkModule(reactContext: ReactApplicationContext) :
 
 
   @ReactMethod
-  fun initCameraScreen(promise: Promise){
+  fun initCameraScreen(configuration:String,promise: Promise){
+    Log.d("TAG", "initCameraScreen: $configuration")
     promise2 = promise
     currentActivity!!.startActivity(Intent(currentActivity, CameraActivity::class.java))
   }
