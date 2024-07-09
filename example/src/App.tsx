@@ -9,6 +9,7 @@ import {
   Mode,
 } from 'truvideo-react-camera-sdk';
 
+
 export default function App() {
   const [result, setResult] = React.useState<number | undefined>();
   const [configuration, setConfiguration] = React.useState<any>();

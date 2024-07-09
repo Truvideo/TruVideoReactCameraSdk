@@ -30,3 +30,4 @@ export function initCameraScreen(
 }
 
 export { LensFacing, FlashMode, Orientation, Mode };
+
