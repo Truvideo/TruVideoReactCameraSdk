@@ -17,7 +17,7 @@ import java.security.NoSuchAlgorithmException
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 
-class TruVideoReactCameraSdkModule(reactContext: ReactApplicationContext) :
+class TruVideoReactCameraSdkModule(reactContext: ReactApplicationContext)  :
   ReactContextBaseJavaModule(reactContext) {
   private val scope = CoroutineScope(Dispatchers.Main)
   override fun getName(): String {
@@ -69,7 +69,7 @@ class TruVideoReactCameraSdkModule(reactContext: ReactApplicationContext) :
       // If user is authenticated successfully
       TruvideoSdk.initAuthentication()
 //      promise.resolve("Authentication Successful")
-      initCameraScreen("",promise)
+//      initCameraScreen("",promise)
       // Authentication ready
       // Truvideo SDK its ready to be used
     } catch (exception: Exception) {
@@ -119,7 +119,7 @@ class TruVideoReactCameraSdkModule(reactContext: ReactApplicationContext) :
   fun initCameraScreen(configuration:String,promise: Promise){
     Log.d("TAG", "initCameraScreen: $configuration")
     promise2 = promise
-    currentActivity!!.startActivity(Intent(currentActivity, CameraActivity::class.java))
+    currentActivity!!.startActivity(Intent(currentActivity, CameraActivity::class.java).putExtra("configuration",configuration))
   }
 
 

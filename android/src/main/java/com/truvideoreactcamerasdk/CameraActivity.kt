@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.gson.Gson
 import com.truvideo.sdk.camera.TruvideoSdkCamera
 import com.truvideo.sdk.camera.model.TruvideoSdkCameraConfiguration
 import com.truvideo.sdk.camera.model.TruvideoSdkCameraFlashMode
@@ -19,9 +20,15 @@ import com.truvideo.sdk.camera.usecase.TruvideoSdkCameraScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 class CameraActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
+  var configuration = ""
+  var lensFacing = TruvideoSdkCameraLensFacing.BACK
+  var flashMode = TruvideoSdkCameraFlashMode.OFF
+  var orientation: TruvideoSdkCameraOrientation? = null
+  var mode = TruvideoSdkCameraMode.VIDEO_AND_PICTURE
+  override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_camera)
@@ -31,11 +38,15 @@ class CameraActivity : ComponentActivity() {
             insets
         }
         val cameraScreen = TruvideoSdkCamera.initCameraScreen(this)
+        getIntentData()
         CoroutineScope(Dispatchers.Main).launch {
           openCamera(this@CameraActivity,cameraScreen)
         }
 
 
+    }
+    fun getIntentData(){
+        configuration = intent.getStringExtra("configuration")!!
     }
     suspend fun openCamera(context: Context, cameraScreen: TruvideoSdkCameraScreen?) {
       // Start camera with configuration
@@ -43,40 +54,19 @@ class CameraActivity : ComponentActivity() {
       if (cameraScreen == null) return
       // Get camera information
       val cameraInfo = TruvideoSdkCamera.getInformation()
-      // you can choose the default camera lens facing
-      // options: Back, Front
-      val lensFacing = TruvideoSdkCameraLensFacing.BACK
-      // TruvideoSdkCameraLensFacing lensFacing = TruvideoSdkCameraLensFacing.FRONT;
 
-      // You can choose if the flash is on or off by default
-      val flashMode = TruvideoSdkCameraFlashMode.OFF
-      // val flashMode = TruvideoSdkCameraFlashMode.ON
-
-      // You can choose the camera orientation
-      // Options: null, Portrait, LandscapeLeft, LandscapeRight, PortraitReverse
-      // Null means any orientation
-      val orientation: TruvideoSdkCameraOrientation? = null
-      // TruvideoSdkCameraOrientation orientation = TruvideoSdkCameraOrientation.PORTRAIT;
-      // TruvideoSdkCameraOrientation orientation = TruvideoSdkCameraOrientation.LANDSCAPE_LEFT;
-      // TruvideoSdkCameraOrientation orientation = TruvideoSdkCameraOrientation.LANDSCAPE_RIGHT;
-      // TruvideoSdkCameraOrientation orientation = TruvideoSdkCameraOrientation.PORTRAIT_REVERSE;
-
-      // You can choose where the files will be saved
-      val outputPath = context.filesDir.path + "/camera"
-
-      // You can decide the list of allowed resolutions for the front camera
-      // if you send an empty list, all the resolutions are allowed
+      var outputPath = context.filesDir.path + "/camera"
+      val jsonConfiguration = JSONObject(configuration)
+      if(jsonConfiguration.has("outputPath")){
+        val newOutputPath = jsonConfiguration.getString("outputPath")
+        if(newOutputPath.isNotEmpty()){
+          outputPath = newOutputPath
+        }
+      }
       var frontResolutions: List<TruvideoSdkCameraResolution> = ArrayList()
       if (cameraInfo.frontCamera != null) {
-        // if you don't want to decide the list of allowed resolutions, you can send all the resolutions or an empty list
+        // if you don't want to decide the list of allowed resolutions, you can s1end all the resolutions or an empty list
         frontResolutions = cameraInfo.frontCamera!!.resolutions
-
-        //frontResolutions = new ArrayList<>();
-
-        // Example of how to allow only the one resolution
-        // List<TruvideoSdkCameraResolution> resolutions = new ArrayList<>();
-        // resolutions.add(cameraInfo.getFrontCamera().getResolutions().get(0));
-        // frontResolutions = resolutions;
       }
 
 
@@ -89,17 +79,9 @@ class CameraActivity : ComponentActivity() {
           frontResolution = resolutions[0]
         }
       }
-
       val backResolutions: List<TruvideoSdkCameraResolution> = ArrayList()
       val backResolution: TruvideoSdkCameraResolution? = null
-
-
-      // You can decide the mode of the camera
-      // Options: video and picture, video, picture
-      val mode = TruvideoSdkCameraMode.VIDEO_AND_PICTURE
-
-      // TruvideoSdkCameraMode mode = TruvideoSdkCameraMode.VIDEO;
-      // TruvideoSdkCameraMode mode = TruvideoSdkCameraMode.PICTURE;
+      checkConfigure()
       val configuration = TruvideoSdkCameraConfiguration(
         lensFacing = lensFacing,
         flashMode = flashMode,
@@ -113,9 +95,42 @@ class CameraActivity : ComponentActivity() {
       )
 
       val result = cameraScreen?.open(configuration)
-      Log.d("TAG", "openCamera: $result")
-      TruVideoReactCameraSdkModule.promise2!!.resolve(result.toString())
+      val gson = Gson()
+      val jsonResult = gson.toJson(result)
+      TruVideoReactCameraSdkModule.promise2!!.resolve(jsonResult)
       finish()
+    }
+
+    fun checkConfigure() {
+      val jsonConfiguration = JSONObject(configuration)
+      if (jsonConfiguration.has("lensFacing")) {
+        when (jsonConfiguration.getString("lensFacing")) {
+          "back" -> lensFacing = TruvideoSdkCameraLensFacing.BACK
+          "front" -> lensFacing = TruvideoSdkCameraLensFacing.FRONT
+        }
+      }
+      if(jsonConfiguration.has("flashMode")) {
+        when (jsonConfiguration.getString("flashMode")) {
+          "on" -> flashMode = TruvideoSdkCameraFlashMode.ON
+          "off" -> flashMode = TruvideoSdkCameraFlashMode.OFF
+
+        }
+      }
+      if(jsonConfiguration.has("orientation")) {
+        when(jsonConfiguration.getString("orientation")){
+          "portrait" -> orientation = TruvideoSdkCameraOrientation.PORTRAIT
+          "landscapeLeft" -> orientation = TruvideoSdkCameraOrientation.LANDSCAPE_LEFT
+          "landscapeRight" -> orientation = TruvideoSdkCameraOrientation.LANDSCAPE_RIGHT
+          "portraitReverse" -> orientation = TruvideoSdkCameraOrientation.PORTRAIT_REVERSE
+        }
+      }
+      if(jsonConfiguration.has("mode")){
+        when(jsonConfiguration.getString("mode")) {
+          "videoAndPicture" -> mode = TruvideoSdkCameraMode.VIDEO_AND_PICTURE
+          "video" -> mode = TruvideoSdkCameraMode.VIDEO
+          "picture" -> mode = TruvideoSdkCameraMode.PICTURE
+        }
+      }
     }
 
 }

@@ -101,5 +101,7 @@ dependencies {
   implementation 'androidx.activity:activity:1.9.0'
   implementation 'com.github.Truvideo:truvideo-sdk-android-core:71.1.1'
   implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+  implementation 'org.json:json:20210307'
+  implementation 'com.google.code.gson:gson:2.8.9'
 }
 
