@@ -19,10 +19,6 @@ const TruVideoReactCameraSdk = NativeModules.TruVideoReactCameraSdk
       }
     );
 
-export function authetication(a: number, b: number): Promise<number> {
-  return TruVideoReactCameraSdk.multiply(a, b);
-}
-
 export function initCameraScreen(
   configuration: CameraConfiguration
 ): Promise<string> {

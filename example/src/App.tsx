@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, View, Button } from 'react-native';
 import {
-  authetication,
   initCameraScreen,
   LensFacing,
   FlashMode,
@@ -11,12 +10,6 @@ import {
 } from 'truvideo-react-camera-sdk';
 
 export default function App() {
-  React.useEffect(() => {
-    authetication(3, 7).then((res) => {
-      console.log('res', res);
-    });
-  }, []);
-
   const configuration: CameraConfiguration = {
     lensFacing: LensFacing.Front,
     flashMode: FlashMode.Off,
