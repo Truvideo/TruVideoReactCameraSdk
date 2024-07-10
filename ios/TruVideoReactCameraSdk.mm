@@ -6,7 +6,8 @@ RCT_EXTERN_METHOD(multiply:(float)a withB:(float)b
                  withResolver:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
 
-RCT_EXTERN_METHOD(cameraInitiate:(RCTPromiseResolveBlock)resolve
+RCT_EXTERN_METHOD(initCameraScreen:(NSString)jsonData
+                 withResolver:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
                  
 + (BOOL)requiresMainQueueSetup
