@@ -32,7 +32,7 @@ export default function App() {
 
   const inItCamera = () => {
     initCameraScreen(configuration).then((setResult) => {
-      console.log('setResult Ayushgit', setResult);
+      console.log('setResult', setResult);
     });
   };
 

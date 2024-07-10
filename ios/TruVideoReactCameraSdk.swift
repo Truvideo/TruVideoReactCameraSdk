@@ -24,7 +24,7 @@ class TruVideoReactCameraSdk: NSObject {
         do {
             if let configuration = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
                 print(configuration)
-                self.authenticate()
+               // self.authenticate()
                 self.cameraInitiate(configuration: configuration) { cameraResult in
                     do {
                         
