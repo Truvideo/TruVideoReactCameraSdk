@@ -19,7 +19,7 @@ const TruVideoReactCameraSdk = NativeModules.TruVideoReactCameraSdk
       }
     );
 
-export function multiply(a: number, b: number): Promise<number> {
+export function authetication(a: number, b: number): Promise<number> {
   return TruVideoReactCameraSdk.multiply(a, b);
 }
 
@@ -30,3 +30,5 @@ export function initCameraScreen(
 }
 
 export { LensFacing, FlashMode, Orientation, Mode };
+
+export * from './cameraConfigInterface';

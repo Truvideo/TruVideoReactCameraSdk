@@ -1,44 +1,45 @@
 import * as React from 'react';
-import { StyleSheet, View, Button, Text } from 'react-native';
+import { StyleSheet, View, Button } from 'react-native';
 import {
-  multiply,
+  authetication,
   initCameraScreen,
   LensFacing,
   FlashMode,
   Orientation,
   Mode,
+  type CameraConfiguration,
 } from 'truvideo-react-camera-sdk';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
-  const [configuration, setConfiguration] = React.useState<any>();
-
   React.useEffect(() => {
-    multiply(3, 7).then(setResult);
-
-    setConfiguration({
-      lensFacing: LensFacing.Back,
-      flashMode: FlashMode.On,
-      orientation: Orientation.Portrait,
-      outputPath: '',
-      frontResolutions: [],
-      frontResolution: 'nil',
-      backResolutions: [],
-      backResolution: 'nil',
-      mode: Mode.Picture,
+    authetication(3, 7).then((res) => {
+      console.log('res', res);
     });
   }, []);
 
+  const configuration: CameraConfiguration = {
+    lensFacing: LensFacing.Front,
+    flashMode: FlashMode.Off,
+    orientation: Orientation.Portrait,
+    outputPath: '',
+    frontResolutions: [],
+    frontResolution: 'nil',
+    backResolutions: [],
+    backResolution: 'nil',
+    mode: Mode.Picture,
+  };
+
   const inItCamera = () => {
-    initCameraScreen(configuration).then((setResult) => {
-      console.log('setResult', setResult);
+    initCameraScreen(configuration).then((res) => {
+      console.log('typeOf res', typeof res);
+      console.log('res', JSON.parse(res));
+      let obj = JSON.parse(res);
+      console.log('filePath', obj[0].filePath);
     });
   };
 
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
-
       <Button
         onPress={() => inItCamera()}
         title="Press to initialize camera"
