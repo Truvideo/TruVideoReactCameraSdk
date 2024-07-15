@@ -8,13 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* TruVideoReactCameraSdkExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* TruVideoReactCameraSdkExampleTests.m */; };
-		0C80B921A6F3F58F76C31292 /* libPods-TruVideoReactCameraSdkExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-TruVideoReactCameraSdkExample.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		188407642C37EE0E00F25F9D /* libtruvideo-react-camera-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 188407632C37EE0E00F25F9D /* libtruvideo-react-camera-sdk.a */; settings = {ATTRIBUTES = (Required, ); }; };
+		188407652C37EE7900F25F9D /* libPods-TruVideoReactCameraSdkExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-TruVideoReactCameraSdkExample.a */; settings = {ATTRIBUTES = (Required, ); }; };
+		189AE9282C3E60A7006925D8 /* TruvideoSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 189AE9272C3E60A7006925D8 /* TruvideoSdk */; };
+		189AE92B2C3E60BC006925D8 /* TruvideoSdkCamera in Frameworks */ = {isa = PBXBuildFile; productRef = 189AE92A2C3E60BC006925D8 /* TruvideoSdkCamera */; };
 		2F1B4FB940728D77118320C5 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 3FA2C50CAE662C1F4C768432 /* PrivacyInfo.xcprivacy */; };
 		7699B88040F8A987B510C191 /* libPods-TruVideoReactCameraSdkExample-TruVideoReactCameraSdkExampleTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-TruVideoReactCameraSdkExample-TruVideoReactCameraSdkExampleTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		DF7336ED4BAC73E471221F9A /* libPods-TruVideoReactCameraSdkExample-TruVideoReactCameraSdkExampleTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 188407612C37EE0600F25F9D /* libPods-TruVideoReactCameraSdkExample-TruVideoReactCameraSdkExampleTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,9 +42,15 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = TruVideoReactCameraSdkExample/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = TruVideoReactCameraSdkExample/main.m; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = TruVideoReactCameraSdkExample/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		188407372C36C30E00F25F9D /* libtruvideo-react-camera-sdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libtruvideo-react-camera-sdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		188407452C36C91F00F25F9D /* libtruvideo-react-camera-sdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libtruvideo-react-camera-sdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		188407492C36CBBC00F25F9D /* libtruvideo-react-camera-sdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libtruvideo-react-camera-sdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1884074E2C36E2A500F25F9D /* libtruvideo-react-camera-sdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libtruvideo-react-camera-sdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		188407612C37EE0600F25F9D /* libPods-TruVideoReactCameraSdkExample-TruVideoReactCameraSdkExampleTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libPods-TruVideoReactCameraSdkExample-TruVideoReactCameraSdkExampleTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		188407632C37EE0E00F25F9D /* libtruvideo-react-camera-sdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libtruvideo-react-camera-sdk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-TruVideoReactCameraSdkExample-TruVideoReactCameraSdkExampleTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TruVideoReactCameraSdkExample-TruVideoReactCameraSdkExampleTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-TruVideoReactCameraSdkExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TruVideoReactCameraSdkExample.debug.xcconfig"; path = "Target Support Files/Pods-TruVideoReactCameraSdkExample/Pods-TruVideoReactCameraSdkExample.debug.xcconfig"; sourceTree = "<group>"; };
-		3FA2C50CAE662C1F4C768432 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = TruVideoReactCameraSdkExample/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		3FA2C50CAE662C1F4C768432 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = TruVideoReactCameraSdkExample/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-TruVideoReactCameraSdkExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TruVideoReactCameraSdkExample.release.xcconfig"; path = "Target Support Files/Pods-TruVideoReactCameraSdkExample/Pods-TruVideoReactCameraSdkExample.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-TruVideoReactCameraSdkExample-TruVideoReactCameraSdkExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TruVideoReactCameraSdkExample-TruVideoReactCameraSdkExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-TruVideoReactCameraSdkExample-TruVideoReactCameraSdkExampleTests/Pods-TruVideoReactCameraSdkExample-TruVideoReactCameraSdkExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-TruVideoReactCameraSdkExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TruVideoReactCameraSdkExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -55,6 +65,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7699B88040F8A987B510C191 /* libPods-TruVideoReactCameraSdkExample-TruVideoReactCameraSdkExampleTests.a in Frameworks */,
+				DF7336ED4BAC73E471221F9A /* libPods-TruVideoReactCameraSdkExample-TruVideoReactCameraSdkExampleTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,7 +73,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C80B921A6F3F58F76C31292 /* libPods-TruVideoReactCameraSdkExample.a in Frameworks */,
+				188407652C37EE7900F25F9D /* libPods-TruVideoReactCameraSdkExample.a in Frameworks */,
+				188407642C37EE0E00F25F9D /* libtruvideo-react-camera-sdk.a in Frameworks */,
+				189AE92B2C3E60BC006925D8 /* TruvideoSdkCamera in Frameworks */,
+				189AE9282C3E60A7006925D8 /* TruvideoSdk in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,6 +118,12 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				188407632C37EE0E00F25F9D /* libtruvideo-react-camera-sdk.a */,
+				188407612C37EE0600F25F9D /* libPods-TruVideoReactCameraSdkExample-TruVideoReactCameraSdkExampleTests.a */,
+				1884074E2C36E2A500F25F9D /* libtruvideo-react-camera-sdk.a */,
+				188407492C36CBBC00F25F9D /* libtruvideo-react-camera-sdk.a */,
+				188407452C36C91F00F25F9D /* libtruvideo-react-camera-sdk.a */,
+				188407372C36C30E00F25F9D /* libtruvideo-react-camera-sdk.a */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				5DCACB8F33CDC322A6C60F78 /* libPods-TruVideoReactCameraSdkExample.a */,
 				19F6CBCC0A4E27FBF8BF4A61 /* libPods-TruVideoReactCameraSdkExample-TruVideoReactCameraSdkExampleTests.a */,
@@ -194,6 +214,10 @@
 			dependencies = (
 			);
 			name = TruVideoReactCameraSdkExample;
+			packageProductDependencies = (
+				189AE9272C3E60A7006925D8 /* TruvideoSdk */,
+				189AE92A2C3E60BC006925D8 /* TruvideoSdkCamera */,
+			);
 			productName = TruVideoReactCameraSdkExample;
 			productReference = 13B07F961A680F5B00A75B9A /* TruVideoReactCameraSdkExample.app */;
 			productType = "com.apple.product-type.application";
@@ -224,6 +248,10 @@
 				Base,
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
+			packageReferences = (
+				189AE9262C3E60A7006925D8 /* XCRemoteSwiftPackageReference "truvideo-sdk-ios-core" */,
+				189AE9292C3E60BC006925D8 /* XCRemoteSwiftPackageReference "truvideo-sdk-ios-camera" */,
+			);
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -472,6 +500,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 53A3R7EC79;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = TruVideoReactCameraSdkExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -484,7 +513,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.DigitalDist.DTB;
 				PRODUCT_NAME = TruVideoReactCameraSdkExample;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -499,6 +528,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 53A3R7EC79;
 				INFOPLIST_FILE = TruVideoReactCameraSdkExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -510,7 +540,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.DigitalDist.DTB;
 				PRODUCT_NAME = TruVideoReactCameraSdkExample;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -590,10 +620,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -665,10 +692,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -707,6 +731,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		189AE9262C3E60A7006925D8 /* XCRemoteSwiftPackageReference "truvideo-sdk-ios-core" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Truvideo/truvideo-sdk-ios-core.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 71.1.1;
+			};
+		};
+		189AE9292C3E60BC006925D8 /* XCRemoteSwiftPackageReference "truvideo-sdk-ios-camera" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Truvideo/truvideo-sdk-ios-camera.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 71.1.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		189AE9272C3E60A7006925D8 /* TruvideoSdk */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 189AE9262C3E60A7006925D8 /* XCRemoteSwiftPackageReference "truvideo-sdk-ios-core" */;
+			productName = TruvideoSdk;
+		};
+		189AE92A2C3E60BC006925D8 /* TruvideoSdkCamera */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 189AE9292C3E60BC006925D8 /* XCRemoteSwiftPackageReference "truvideo-sdk-ios-camera" */;
+			productName = TruvideoSdkCamera;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 83CBB9F71A601CBA00E9B192 /* Project object */;
 }

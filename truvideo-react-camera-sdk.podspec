@@ -36,6 +36,9 @@ Pod::Spec.new do |s|
       s.dependency "RCTRequired"
       s.dependency "RCTTypeSafety"
       s.dependency "ReactCommon/turbomodule/core"
+      s.dependency "TruvideoSdk", :git => "https://github.com/Truvideo/truvideo-sdk-ios-core.git"
+      s.dependency "TruvideoSdkCamera", :git => "https://github.com/Truvideo/truvideo-sdk-ios-camera.git"  # Replace '1.0.0' with the appropriate version/tag if needed
+
     end
   end
 end
