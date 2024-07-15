@@ -18,7 +18,12 @@ const TruVideoReactCameraSdk = NativeModules.TruVideoReactCameraSdk
         },
       }
     );
-
+/**
+ * Initializes the camera screen with the given configuration.
+ *
+ * @param {CameraConfiguration} configuration - The configuration for the camera screen.
+ * @return {Promise<string>} A promise that resolves to a string representing the result of the initialization.
+ */
 export function initCameraScreen(
   configuration: CameraConfiguration
 ): Promise<string> {
