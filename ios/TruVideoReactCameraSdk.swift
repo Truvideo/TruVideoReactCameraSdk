@@ -1,10 +1,9 @@
 import TruvideoSdkCamera
 import Foundation
-import CommonCrypto
 
 @objc(TruVideoReactCameraSdk)
 class TruVideoReactCameraSdk: NSObject {
-        
+    
     @objc(multiply:withB:withResolver:withRejecter:)
     func multiply(a: Float, b: Float, resolve:RCTPromiseResolveBlock, reject:RCTPromiseRejectBlock) -> Void {
         resolve(a * b)
@@ -23,10 +22,38 @@ class TruVideoReactCameraSdk: NSObject {
                 print(configuration)
                 self.cameraInitiate(configuration: configuration) { cameraResult in
                     do {
-                        
                         let cameraResultDict = cameraResult.toDictionary()
-                        let mediaData = cameraResultDict["media"] as? [[String : Any]]
-                        resolve(mediaData)
+                        if let mediaData = cameraResultDict["media"] as? [[String: Any]] {
+                            var sanitizedMediaData: [[String: Any]] = []
+                            
+                            for item in mediaData {
+                                var sanitizedItem: [String: Any] = [:]
+                                for (key, value) in item {
+                                    
+                                    if key == "type" {
+                                        if (value as AnyObject).description == "TruvideoSdkCamera.TruvideoSdkCameraMediaType.photo"  {
+                                            sanitizedItem["type"] = (value as AnyObject).description
+                                        } else {
+                                            sanitizedItem["type"] = (value as AnyObject).description
+                                        }
+                                    }
+                                    if JSONSerialization.isValidJSONObject([key: value]) {
+                                        sanitizedItem[key] = value
+                                    } else if let value = value as? CustomStringConvertible {
+                                        sanitizedItem[key] = value.description
+                                    } else {
+                                        print("Skipping invalid JSON value for key: \(key)")
+                                    }
+                                }
+                                sanitizedMediaData.append(sanitizedItem)
+                            }
+                            if let jsonData = try? JSONSerialization.data(withJSONObject: sanitizedMediaData, options: []) {
+                                if let jsonString = String(data: jsonData, encoding: .utf8) {
+                                    print(jsonString)
+                                    resolve(jsonString)
+                                }
+                            }
+                        }
                     }
                 }
             } else {
@@ -38,7 +65,7 @@ class TruVideoReactCameraSdk: NSObject {
             reject("json_error", "Error parsing JSON", error)
         }
     }
-
+    
     
     private func cameraInitiate(configuration: [String:Any], completion: @escaping (_ cameraResult: TruvideoSdkCameraResult) -> Void) {
         DispatchQueue.main.async {
@@ -59,9 +86,9 @@ class TruVideoReactCameraSdk: NSObject {
             print("Camera Info:", cameraInfo)
             
             let lensType: TruvideoSdkCameraLensFacing = lensFacingString == "back" ? .back: .front
-           
+            
             let flashMode: TruvideoSdkCameraFlashMode = flashModeString == "on" ? .on: .off
-           
+            
             let orientation: TruvideoSdkCameraOrientation
             switch orientationString {
             case "portrait":
@@ -76,7 +103,7 @@ class TruVideoReactCameraSdk: NSObject {
                 print("Unknown orientation:", orientationString)
                 return
             }
-
+            
             let mode: TruvideoSdkCameraMode
             switch modeString {
             case "picture":
@@ -89,7 +116,7 @@ class TruVideoReactCameraSdk: NSObject {
                 print("Unknown mode:", modeString)
                 return
             }
-
+            
             // Configuring the camera with various parameters based on specific requirements.
             let configuration = TruvideoSdkCameraConfiguration(
                 lensFacing: lensType,
@@ -130,7 +157,7 @@ extension TruvideoSdkCamera.TruvideoSdkCameraMedia {
             "type": type,
             "cameraLensFacing": cameraLensFacing.rawValue,
             "rotation": rotation.rawValue,
-            "resolution": resolution.resulDict(),
+            "resolution": resolution,
             "duration": duration
         ]
     }
