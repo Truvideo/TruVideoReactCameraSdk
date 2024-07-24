@@ -4,11 +4,6 @@ import Foundation
 @objc(TruVideoReactCameraSdk)
 class TruVideoReactCameraSdk: NSObject {
     
-    @objc(multiply:withB:withResolver:withRejecter:)
-    func multiply(a: Float, b: Float, resolve:RCTPromiseResolveBlock, reject:RCTPromiseRejectBlock) -> Void {
-        resolve(a * b)
-    }
-    
     @objc(initCameraScreen:withResolver:withRejecter:)
     func initCameraScreen(jsonData: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
         print(jsonData)

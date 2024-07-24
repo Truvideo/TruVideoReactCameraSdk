@@ -16,14 +16,7 @@ class TruVideoReactCameraSdkModule(reactContext: ReactApplicationContext)  :
     return NAME
   }
 
-  // Example method
-  // See https://reactnative.dev/docs/native-modules-android
-  @ReactMethod
-  fun multiply(a: Double, b: Double, promise: Promise) {
-//    promise.resolve(a * b)
-  }
-
-
+  // init camera screen
   @ReactMethod
   fun initCameraScreen(configuration:String,promise: Promise){
     Log.d("TAG", "initCameraScreen: $configuration")
