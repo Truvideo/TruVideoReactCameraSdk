@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -16,7 +17,7 @@ import com.truvideo.sdk.camera.model.TruvideoSdkCameraLensFacing
 import com.truvideo.sdk.camera.model.TruvideoSdkCameraMode
 import com.truvideo.sdk.camera.model.TruvideoSdkCameraOrientation
 import com.truvideo.sdk.camera.model.TruvideoSdkCameraResolution
-import com.truvideo.sdk.camera.usecase.TruvideoSdkCameraScreen
+import com.truvideo.sdk.camera.ui.activities.camera.TruvideoSdkCameraContract
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,7 +28,7 @@ class CameraActivity : ComponentActivity() {
   var lensFacing = TruvideoSdkCameraLensFacing.BACK
   var flashMode = TruvideoSdkCameraFlashMode.OFF
   var orientation: TruvideoSdkCameraOrientation? = null
-  var mode = TruvideoSdkCameraMode.VIDEO_AND_PICTURE
+  var mode = TruvideoSdkCameraMode.videoAndPicture()
   override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -37,7 +38,11 @@ class CameraActivity : ComponentActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val cameraScreen = TruvideoSdkCamera.initCameraScreen(this)
+        val cameraScreen = registerForActivityResult(TruvideoSdkCameraContract()){
+          val gson = Gson()
+          val jsonResult = gson.toJson(it)
+          TruVideoReactCameraSdkModule.promise2!!.resolve(jsonResult)
+        }
         getIntentData()
         CoroutineScope(Dispatchers.Main).launch {
           openCamera(this@CameraActivity,cameraScreen)
@@ -48,7 +53,7 @@ class CameraActivity : ComponentActivity() {
     fun getIntentData(){
         configuration = intent.getStringExtra("configuration")!!
     }
-    suspend fun openCamera(context: Context, cameraScreen: TruvideoSdkCameraScreen?) {
+    suspend fun openCamera(context: Context, cameraScreen: ActivityResultLauncher<TruvideoSdkCameraConfiguration>?) {
       // Start camera with configuration
       // if camera is not available, it will return null
       if (cameraScreen == null) return
@@ -94,10 +99,7 @@ class CameraActivity : ComponentActivity() {
         mode = mode
       )
 
-      val result = cameraScreen?.open(configuration)
-      val gson = Gson()
-      val jsonResult = gson.toJson(result)
-      TruVideoReactCameraSdkModule.promise2!!.resolve(jsonResult)
+      cameraScreen.launch(configuration)
       finish()
     }
 
@@ -126,9 +128,9 @@ class CameraActivity : ComponentActivity() {
       }
       if(jsonConfiguration.has("mode")){
         when(jsonConfiguration.getString("mode")) {
-          "videoAndPicture" -> mode = TruvideoSdkCameraMode.VIDEO_AND_PICTURE
-          "video" -> mode = TruvideoSdkCameraMode.VIDEO
-          "picture" -> mode = TruvideoSdkCameraMode.PICTURE
+          "videoAndPicture" -> mode = TruvideoSdkCameraMode.videoAndPicture()
+          "video" -> mode = TruvideoSdkCameraMode.video()
+          "picture" -> mode = TruvideoSdkCameraMode.picture()
         }
       }
     }
