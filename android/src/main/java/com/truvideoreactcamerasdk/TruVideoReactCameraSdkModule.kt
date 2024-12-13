@@ -6,6 +6,7 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.Promise
+import com.facebook.react.modules.core.DeviceEventManagerModule
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 
@@ -21,12 +22,12 @@ class TruVideoReactCameraSdkModule(reactContext: ReactApplicationContext)  :
   fun initCameraScreen(configuration:String,promise: Promise){
     Log.d("TAG", "initCameraScreen: $configuration")
     promise2 = promise
+    reactContext = reactApplicationContext
     currentActivity!!.startActivity(Intent(currentActivity, CameraActivity::class.java).putExtra("configuration",configuration))
   }
 
-
-
   companion object {
+    lateinit var reactContext : ReactApplicationContext
     const val NAME = "TruVideoReactCameraSdk"
     var promise2 : Promise? = null
   }

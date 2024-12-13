@@ -2,24 +2,23 @@ package com.truvideoreactcamerasdk
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.result.ActivityResultLauncher
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.facebook.react.bridge.ReactApplicationContext
+import com.facebook.react.modules.core.DeviceEventManagerModule
 import com.google.gson.Gson
 import com.truvideo.sdk.camera.TruvideoSdkCamera
 import com.truvideo.sdk.camera.model.TruvideoSdkCameraConfiguration
+import com.truvideo.sdk.camera.model.TruvideoSdkCameraEvent
 import com.truvideo.sdk.camera.model.TruvideoSdkCameraFlashMode
 import com.truvideo.sdk.camera.model.TruvideoSdkCameraLensFacing
 import com.truvideo.sdk.camera.model.TruvideoSdkCameraMode
 import com.truvideo.sdk.camera.model.TruvideoSdkCameraOrientation
 import com.truvideo.sdk.camera.model.TruvideoSdkCameraResolution
-import com.truvideo.sdk.camera.usecase.TruvideoSdkCameraScreen
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.truvideo.sdk.camera.ui.activities.camera.TruvideoSdkCameraContract
 import org.json.JSONObject
 
 class CameraActivity : ComponentActivity() {
@@ -27,7 +26,7 @@ class CameraActivity : ComponentActivity() {
   var lensFacing = TruvideoSdkCameraLensFacing.BACK
   var flashMode = TruvideoSdkCameraFlashMode.OFF
   var orientation: TruvideoSdkCameraOrientation? = null
-  var mode = TruvideoSdkCameraMode.VIDEO_AND_PICTURE
+  var mode = TruvideoSdkCameraMode.videoAndPicture()
   override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -37,18 +36,33 @@ class CameraActivity : ComponentActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val cameraScreen = TruvideoSdkCamera.initCameraScreen(this)
-        getIntentData()
-        CoroutineScope(Dispatchers.Main).launch {
-          openCamera(this@CameraActivity,cameraScreen)
+        val cameraScreen = registerForActivityResult(TruvideoSdkCameraContract()){
+          // result
+          val gson = Gson()
+          val jsonResult = gson.toJson(it)
+          TruVideoReactCameraSdkModule.promise2!!.resolve(jsonResult)
+          finish()
         }
-
-
+        getIntentData()
+        openCamera(this@CameraActivity,cameraScreen)
+        getEvent()
+    }
+    fun getEvent(){
+      TruvideoSdkCamera.events.observe(this){event : TruvideoSdkCameraEvent ->
+        val gson = Gson()
+        val jsonResult = gson.toJson(event)
+        sendEvent(reactContext = TruVideoReactCameraSdkModule.reactContext,eventName = "cameraEvent",event = jsonResult.toString())
+      }
+    }
+    fun sendEvent(reactContext: ReactApplicationContext, eventName: String, event: String) {
+      reactContext
+        .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
+        .emit(eventName, event)
     }
     fun getIntentData(){
         configuration = intent.getStringExtra("configuration")!!
     }
-    suspend fun openCamera(context: Context, cameraScreen: TruvideoSdkCameraScreen?) {
+    fun openCamera(context: Context, cameraScreen: ActivityResultLauncher<TruvideoSdkCameraConfiguration>?) {
       // Start camera with configuration
       // if camera is not available, it will return null
       if (cameraScreen == null) return
@@ -94,11 +108,8 @@ class CameraActivity : ComponentActivity() {
         mode = mode
       )
 
-      val result = cameraScreen?.open(configuration)
-      val gson = Gson()
-      val jsonResult = gson.toJson(result)
-      TruVideoReactCameraSdkModule.promise2!!.resolve(jsonResult)
-      finish()
+      cameraScreen.launch(configuration)
+
     }
 
     fun checkConfigure() {
@@ -126,9 +137,9 @@ class CameraActivity : ComponentActivity() {
       }
       if(jsonConfiguration.has("mode")){
         when(jsonConfiguration.getString("mode")) {
-          "videoAndPicture" -> mode = TruvideoSdkCameraMode.VIDEO_AND_PICTURE
-          "video" -> mode = TruvideoSdkCameraMode.VIDEO
-          "picture" -> mode = TruvideoSdkCameraMode.PICTURE
+          "videoAndPicture" -> mode = TruvideoSdkCameraMode.videoAndPicture()
+          "video" -> mode = TruvideoSdkCameraMode.video()
+          "picture" -> mode = TruvideoSdkCameraMode.picture()
         }
       }
     }
