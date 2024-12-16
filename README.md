@@ -5,6 +5,12 @@ none
 ## Installation
 
 ```sh
+"dependencies": {
+  // replace token with your personal access token
+    "truvideo-react-camera-sdk": "git+https://<token>@github.com/Truvideo/TruVideoReactCameraSdk.git#release-version-76"
+}
+
+// or
 npm install truvideo-react-camera-sdk
 ```
 
