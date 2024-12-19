@@ -45,7 +45,6 @@ class CameraActivity : ComponentActivity() {
         }
         getIntentData()
         openCamera(this@CameraActivity,cameraScreen)
-        getEvent()
     }
     fun getEvent(){
       TruvideoSdkCamera.events.observe(this){event : TruvideoSdkCameraEvent ->
@@ -62,7 +61,7 @@ class CameraActivity : ComponentActivity() {
     fun getIntentData(){
         configuration = intent.getStringExtra("configuration")!!
     }
-    fun openCamera(context: Context, cameraScreen: ActivityResultLauncher<TruvideoSdkCameraConfiguration>?) {
+    private fun openCamera(context: Context, cameraScreen: ActivityResultLauncher<TruvideoSdkCameraConfiguration>?) {
       // Start camera with configuration
       // if camera is not available, it will return null
       if (cameraScreen == null) return
@@ -112,7 +111,7 @@ class CameraActivity : ComponentActivity() {
 
     }
 
-    fun checkConfigure() {
+    private fun checkConfigure() {
       val jsonConfiguration = JSONObject(configuration)
       if (jsonConfiguration.has("lensFacing")) {
         when (jsonConfiguration.getString("lensFacing")) {

@@ -96,11 +96,17 @@ dependencies {
   implementation "com.facebook.react:react-native:+"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
   implementation 'com.github.Truvideo:truvideo-sdk-android-camera:76.2.5'
-  implementation 'androidx.appcompat:appcompat:1.7.0'
+//  implementation 'com.github.Truvideo:truvideo-sdk-android-core:76.2.5'
   implementation 'com.google.android.material:material:1.12.0'
-  implementation 'androidx.activity:activity:1.9.0'
-  implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-  implementation 'org.json:json:20210307'
-  implementation 'com.google.code.gson:gson:2.8.9'
+  implementation 'androidx.activity:activity-ktx:1.9.3'
+  implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
+  implementation 'org.json:json:20240303'
+  implementation 'com.google.code.gson:gson:2.10.1'
+
+  implementation platform('androidx.compose:compose-bom:2024.03.01')
+  implementation 'androidx.compose.ui:ui'
+  implementation 'androidx.compose.material:material'
+  implementation 'androidx.compose.ui:ui-tooling-preview'
+
 }
 
