@@ -21,7 +21,6 @@ export default function App() {
     backResolution: 'nil',
     mode: Mode.Picture,
   };
-
   const inItCamera = () => {
     initCameraScreen(configuration).then((res) => {
       console.log('typeOf res', typeof res);

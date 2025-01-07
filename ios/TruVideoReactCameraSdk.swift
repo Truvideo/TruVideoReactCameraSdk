@@ -99,14 +99,14 @@ class TruVideoReactCameraSdk: NSObject {
                 return
             }
             
-            let mode: TruvideoSdkCameraMode
+            let mode: TruvideoSdkCameraMediaMode
             switch modeString {
             case "picture":
-                mode = .picture
+                mode = .picture()
             case "video":
-                mode = .video
+                mode = .video()
             case "videoAndPicture":
-                mode = .videoAndPicture
+                mode = .videoAndPicture()
             default:
                 print("Unknown mode:", modeString)
                 return

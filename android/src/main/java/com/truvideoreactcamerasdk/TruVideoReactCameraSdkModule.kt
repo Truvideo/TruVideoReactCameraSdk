@@ -1,7 +1,6 @@
 package com.truvideoreactcamerasdk
 
 import android.content.Intent
-import android.util.Log
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
 import com.facebook.react.bridge.ReactMethod
@@ -19,14 +18,13 @@ class TruVideoReactCameraSdkModule(reactContext: ReactApplicationContext)  :
   // init camera screen
   @ReactMethod
   fun initCameraScreen(configuration:String,promise: Promise){
-    Log.d("TAG", "initCameraScreen: $configuration")
     promise2 = promise
+    reactContext = reactApplicationContext
     currentActivity!!.startActivity(Intent(currentActivity, CameraActivity::class.java).putExtra("configuration",configuration))
   }
 
-
-
   companion object {
+    lateinit var reactContext : ReactApplicationContext
     const val NAME = "TruVideoReactCameraSdk"
     var promise2 : Promise? = null
   }
