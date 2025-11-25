@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.truvideoreactcamerasdk">
+  package="com.truvideoreactcamerasdk">
 
-    <application>
-        <activity
-            android:name=".CameraActivity"
-            android:exported="false" />
-    </application>
+  <application>
+    <activity
+      android:name=".ScannerActivity"
+      android:exported="false" />
+    <activity
+      android:name=".ArCameraActivity"
+      android:exported="false" />
+    <activity
+      android:name=".CameraActivity"
+      android:exported="false" />
+  </application>
 
 </manifest>

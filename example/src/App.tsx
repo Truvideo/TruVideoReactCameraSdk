@@ -5,8 +5,8 @@ import {
   LensFacing,
   FlashMode,
   Orientation,
-  Mode,
   type CameraConfiguration,
+  CameraMode,
 } from 'truvideo-react-camera-sdk';
 
 export default function App() {
@@ -16,18 +16,24 @@ export default function App() {
     orientation: Orientation.Portrait,
     outputPath: '',
     frontResolutions: [],
-    frontResolution: 'nil',
+    frontResolution: { width: 1920, height: 1080 },
     backResolutions: [],
-    backResolution: 'nil',
-    mode: Mode.Picture,
+    backResolution: { width: 1920, height: 1080 },
+    mode: CameraMode.image(),
   };
   const inItCamera = () => {
-    initCameraScreen(configuration).then((res) => {
-      console.log('typeOf res', typeof res);
-      console.log('res', JSON.parse(res));
-      let obj = JSON.parse(res);
-      console.log('filePath', obj[0].filePath);
-    });
+    initCameraScreen(configuration)
+      .then((res) => {
+        console.log('typeOf res', typeof res); // 'object'
+        console.log('res', res);
+
+        if (res && res.length > 0) {
+          console.log('filePath', res[0]!.filePath);
+        } else {
+          console.warn('No camera result returned');
+        }
+      })
+      .catch((e) => console.warn(e));
   };
 
   return (
