@@ -1,4 +1,5 @@
-import * as React from 'react';
+// @ts-ignore - React is required for JSX but TypeScript doesn't see it as used
+import React from 'react';
 import { StyleSheet, View, Button } from 'react-native';
 import {
   initCameraScreen,

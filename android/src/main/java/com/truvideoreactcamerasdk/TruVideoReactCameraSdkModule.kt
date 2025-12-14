@@ -48,10 +48,15 @@ class TruVideoReactCameraSdkModule(reactContext: ReactApplicationContext)  :
   }
 
   @ReactMethod
-  fun requestInstallAugmentedReality(promise: Promise?) {
-    TruvideoSdkCamera.requestInstallAugmentedReality(reactContext.currentActivity!!)
-    promise?.resolve(true)
-  }
+    fun requestInstallAugmentedReality(promise: Promise?) {
+        val activity = reactApplicationContext.currentActivity
+        if (activity != null) {
+            TruvideoSdkCamera.requestInstallAugmentedReality(activity)
+            promise?.resolve(true)
+        } else {
+            promise?.reject("E_ACTIVITY_DOES_NOT_EXIST", "Activity doesn't exist")
+        }
+    }
 
 
   @ReactMethod
@@ -60,7 +65,14 @@ class TruVideoReactCameraSdkModule(reactContext: ReactApplicationContext)  :
     promise2 = promise
     reactContext = reactApplicationContext
     Log.d("initCameraScreen", configuration)
-    currentActivity!!.startActivity(Intent(currentActivity, CameraActivity::class.java).putExtra("configuration",configuration))
+    val activity = reactApplicationContext.currentActivity
+    if (activity != null) {
+        val intent = Intent(activity, CameraActivity::class.java)
+        intent.putExtra("configuration", configuration)
+        activity.startActivity(intent)
+    } else {
+        promise.reject("E_ACTIVITY_DOES_NOT_EXIST", "Activity doesn't exist")
+    }
   }
 
   @ReactMethod
@@ -69,7 +81,14 @@ class TruVideoReactCameraSdkModule(reactContext: ReactApplicationContext)  :
     promise2 = promise
     reactContext = reactApplicationContext
     Log.d("initCameraScreen", configuration)
-    currentActivity!!.startActivity(Intent(currentActivity, ArCameraActivity::class.java).putExtra("configuration",configuration))
+    val activity = reactApplicationContext.currentActivity
+    if (activity != null) {
+        val intent = Intent(activity, ArCameraActivity::class.java)
+        intent.putExtra("configuration", configuration)
+        activity.startActivity(intent)
+    } else {
+        promise.reject("E_ACTIVITY_DOES_NOT_EXIST", "Activity doesn't exist")
+    }
   }
 
   @ReactMethod
@@ -77,6 +96,12 @@ class TruVideoReactCameraSdkModule(reactContext: ReactApplicationContext)  :
     Log.d("initCameraScreen","initCameraScreen")
     promise2 = promise
     reactContext = reactApplicationContext
-    currentActivity!!.startActivity(Intent(currentActivity, ScannerActivity::class.java))
+    val activity = reactApplicationContext.currentActivity
+    if (activity != null) {
+        val intent = Intent(activity, ScannerActivity::class.java)
+        activity.startActivity(intent)
+    } else {
+        promise.reject("E_ACTIVITY_DOES_NOT_EXIST", "Activity doesn't exist")
+    }
   }
 }

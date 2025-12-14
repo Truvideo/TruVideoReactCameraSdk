@@ -1716,12 +1716,7 @@
 "@react-native/eslint-plugin@0.73.1":
   version "0.73.1"
 
-"@react-native/gradle-plugin@^0.79.2":
-  version "0.79.2"
-  resolved "https://registry.npmjs.org/@react-native/gradle-plugin/-/gradle-plugin-0.79.2.tgz"
-  integrity sha512-6MJFemrwR0bOT0QM+2BxX9k3/pvZQNmJ3Js5pF/6owsA0cUDiCO57otiEU8Fz+UywWEzn1FoQfOfQ8vt2GYmoA==
-
-"@react-native/gradle-plugin@0.74.85":
+"@react-native/gradle-plugin@^0.74.85", "@react-native/gradle-plugin@0.74.85":
   version "0.74.85"
   resolved "https://registry.npmjs.org/@react-native/gradle-plugin/-/gradle-plugin-0.74.85.tgz"
   integrity sha512-1VQSLukJzaVMn1MYcs8Weo1nUW8xCas2XU1KuoV7OJPk6xPnEBFJmapmEGP5mWeEy7kcTXJmddEgy1wwW0tcig==
@@ -6995,10 +6990,11 @@ trim-newlines@^3.0.0:
 trim-newlines@^4.0.2:
   version "4.1.1"
 
-"truvideo-react-camera-sdk-example@file:/Users/faizankhan/Documents/react_native_projects/TruVideo/TruVideoReactCameraSdk/example":
+"truvideo-react-camera-sdk-example@file:/Users/bhaveshpathe/CloneReactNative/TruVideoReactCameraSdk/example":
   version "0.0.1"
   resolved "file:example"
   dependencies:
+    "@react-native/gradle-plugin" "^0.79.2"
     react "18.2.0"
     react-native "0.74.3"
     truvideo-react-camera-sdk "./.."
