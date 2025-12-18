@@ -181,44 +181,54 @@ class TruVideoReactCameraSdk: NSObject {
 
       }
 
-      initiateARCamera(viewController: rootViewController,mode : mode,orientation: orientation){cameraResult in
-          do {
-              let cameraResultDict = cameraResult.toDictionary()
-              if let mediaData = cameraResultDict["media"] as? [[String: Any]] {
-                  var sanitizedMediaData: [[String: Any]] = []
+    initiateARCamera(viewController: rootViewController,mode : mode,orientation: orientation){cameraResult in
+        do {
+            let cameraResultDict = cameraResult.toDictionary()
+            if let mediaData = cameraResultDict["media"] as? [[String: Any]] {
+                var sanitizedMediaData: [[String: Any]] = []
 
-                  for item in mediaData {
-                      var sanitizedItem: [String: Any] = [:]
-                      for (key, value) in item {
-                          if key == "type" {
-                              if (value as AnyObject).description == "TruvideoSdkCamera.TruvideoSdkCameraMediaType.photo"  {
-                                  sanitizedItem["type"] = "PICTURE"
-                              } else {
-                                  sanitizedItem["type"] = "VIDEO"
-                              }
-                          }
-                          if JSONSerialization.isValidJSONObject([key: value]) {
-                              sanitizedItem[key] = value
-                          } else if let value = value as? CustomStringConvertible {
-                              sanitizedItem[key] = value.description
-                          } else {
-                              print("Skipping invalid JSON value for key: \(key)")
-                          }
-                      }
-                      sanitizedMediaData.append(sanitizedItem)
-                  }
-                  if let jsonData = try? JSONSerialization.data(withJSONObject: sanitizedMediaData, options: []) {
-                      if let jsonString = String(data: jsonData, encoding: .utf8) {
-                          print(jsonString)
-                          resolve(jsonString)
-                      }
-                  }
-              }
-          } catch {
-              print("Error serializing camera result: \(error.localizedDescription)")
-              reject("Serialization_Error", "Error serializing camera result", error)
-          }
-      }
+                for item in mediaData {
+                    var sanitizedItem: [String: Any] = [:]
+                    for (key, value) in item {
+                        if key == "type", let mediaType = value as? TruvideoSdkCamera.TruvideoSdkCameraMediaType {
+                            // FIX: Correct type mapping
+                            switch mediaType {
+                            case .photo:
+                                sanitizedItem["type"] = "IMAGE"
+                            case .clip:
+                                sanitizedItem["type"] = "VIDEO"
+                            default:
+                                sanitizedItem["type"] = "Unknown"
+                            }
+                        } else if key == "resolution", let resolution = value as? TruvideoSdkCamera.TruvideoSdkCameraResolution {
+                            // FIX: Proper resolution conversion
+                            sanitizedItem["resolution"] = [
+                                "width": resolution.width,
+                                "height": resolution.height
+                            ]
+                        } else if JSONSerialization.isValidJSONObject([key: value]) {
+                            sanitizedItem[key] = value
+                        } else if let value = value as? CustomStringConvertible {
+                            sanitizedItem[key] = value.description
+                        } else {
+                            print("Skipping invalid JSON value for key: \(key)")
+                        }
+                    }
+                    sanitizedMediaData.append(sanitizedItem)
+                }
+                
+                if let jsonData = try? JSONSerialization.data(withJSONObject: sanitizedMediaData, options: []) {
+                    if let jsonString = String(data: jsonData, encoding: .utf8) {
+                        print(jsonString)
+                        resolve(jsonString)
+                    }
+                }
+            }
+        } catch {
+            print("Error serializing camera result: \(error.localizedDescription)")
+            reject("Serialization_Error", "Error serializing camera result", error)
+        }
+    }
 
   }
 
