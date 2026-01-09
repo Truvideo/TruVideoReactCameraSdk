@@ -1,0 +1,6 @@
+projectKey=TruVideoCameraSdk
+serverUrl=http://localhost:9000
+serverVersion=25.11.0.114957
+dashboardUrl=http://localhost:9000/dashboard?id=TruVideoCameraSdk
+ceTaskId=1f2971d3-5a4a-45df-b9f7-b0ebf010d169
+ceTaskUrl=http://localhost:9000/api/ce/task?id=1f2971d3-5a4a-45df-b9f7-b0ebf010d169

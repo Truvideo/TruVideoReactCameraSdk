@@ -1,6 +1,6 @@
 {
   "name": "truvideo-react-camera-sdk",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "none",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -42,16 +42,17 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/akshay2801-rgb/TruVideoReactCameraSdk.git"
+    "url": "git+https://github.com/TruVideo/TruVideoReactCameraSdk.git"
   },
-  "author": "Akshay Chouhan <akshay.chouhan@5exceptions.com> (https://github.com/akshay2801-rgb)",
+  "author": "TruVideo",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/akshay2801-rgb/TruVideoReactCameraSdk/issues"
+    "url": "https://github.com/TruVideo/TruVideoReactCameraSdk/issues"
   },
-  "homepage": "https://github.com/akshay2801-rgb/TruVideoReactCameraSdk#readme",
+  "homepage": "https://github.com/TruVideo/TruVideoReactCameraSdk#readme",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/",
+    "access": "restricted"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^17.0.2",
