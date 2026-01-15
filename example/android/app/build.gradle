@@ -112,6 +112,15 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+    
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 }
 
 dependencies {
@@ -126,3 +135,32 @@ dependencies {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+
+// Fix for parseDebugLocalResources task issue
+afterEvaluate {
+  // Ensure parseDebugLocalResources creates the required output file
+  tasks.matching { it.name.contains("parseDebugLocalResources") || it.name.contains("parseReleaseLocalResources") }.configureEach { task ->
+    task.doLast {
+      def buildType = task.name.contains("Debug") ? "debug" : "release"
+      def rDefFile = new File(project.buildDir, "intermediates/local_only_symbol_list/${buildType}/parse${buildType.capitalize()}LocalResources/R-def.txt")
+      if (!rDefFile.exists()) {
+        rDefFile.parentFile.mkdirs()
+        rDefFile.createNewFile()
+        rDefFile.text = "" // Create empty file
+      }
+    }
+  }
+  
+  // Ensure generateDebugRFile/generateReleaseRFile can handle missing file
+  tasks.matching { it.name.contains("generateDebugRFile") || it.name.contains("generateReleaseRFile") }.configureEach { task ->
+    task.doFirst {
+      def buildType = task.name.contains("Debug") ? "debug" : "release"
+      def rDefFile = new File(project.buildDir, "intermediates/local_only_symbol_list/${buildType}/parse${buildType.capitalize()}LocalResources/R-def.txt")
+      if (!rDefFile.exists()) {
+        rDefFile.parentFile.mkdirs()
+        rDefFile.createNewFile()
+        rDefFile.text = "" // Create empty file
+      }
+    }
+  }
+}

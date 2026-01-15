@@ -6,12 +6,11 @@ none
 
 ```sh
 "dependencies": {
-  // replace token with your personal access token
-    "truvideo-react-camera-sdk": "git+https://<token>@github.com/Truvideo/TruVideoReactCameraSdk.git#release-version-76"
+    "@trunpm/truvideo-react-camera-sdk": "^1.0.0-beta.1"
 }
 
 // or
-npm install truvideo-react-camera-sdk
+npm install @trunpm/truvideo-react-camera-sdk
 ```
 
 ## Usage
@@ -24,7 +23,7 @@ import {
   Orientation,
   Mode,
   type CameraConfiguration,
-} from 'truvideo-react-camera-sdk';
+} from '@trunpm/truvideo-react-camera-sdk';
 
 // ...
 const configuration: CameraConfiguration = {

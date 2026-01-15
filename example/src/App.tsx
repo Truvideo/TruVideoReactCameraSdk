@@ -8,7 +8,7 @@ import {
   Orientation,
   type CameraConfiguration,
   CameraMode,
-} from 'truvideo-react-camera-sdk';
+} from '@trunpm/truvideo-react-camera-sdk';
 
 export default function App() {
   const configuration: CameraConfiguration = {

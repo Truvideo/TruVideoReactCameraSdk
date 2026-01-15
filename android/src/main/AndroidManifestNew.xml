@@ -2,9 +2,14 @@
   <uses-permission android:name="android.permission.CAMERA"/>
   <application>
     <activity
+      android:name=".ScannerActivity"
+      android:exported="false" />
+    <activity
+      android:name=".ArCameraActivity"
+      android:exported="false" />
+    <activity
       android:name=".CameraActivity"
-      android:exported="true"
-      />
+      android:exported="false" />
   </application>
 
 </manifest>

@@ -9,7 +9,7 @@ buildscript {
   }
 
   dependencies {
-    classpath "com.android.tools.build:gradle:7.2.1"
+    classpath "com.android.tools.build:gradle:8.6.0"
     // noinspection DifferentKotlinGradleVersion
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
   }
@@ -49,12 +49,20 @@ def supportsNamespace() {
 }
 
 android {
+  // Always use namespace when supported (AGP 7.3.0+)
   if (supportsNamespace()) {
     namespace "com.truvideoreactcamerasdk"
 
     sourceSets {
       main {
         manifest.srcFile "src/main/AndroidManifestNew.xml"
+      }
+    }
+  } else {
+    // Fallback for older AGP versions - remove package from manifest
+    sourceSets {
+      main {
+        manifest.srcFile "src/main/AndroidManifest.xml"
       }
     }
   }
@@ -81,11 +89,16 @@ android {
     sourceCompatibility JavaVersion.VERSION_1_8
     targetCompatibility JavaVersion.VERSION_1_8
   }
+
+  kotlinOptions {
+    jvmTarget = '1.8'
+  }
 }
 
 repositories {
   mavenCentral()
   google()
+  maven { url 'https://www.jitpack.io' }
 }
 
 def kotlin_version = getExtOrDefault("kotlinVersion")
@@ -95,7 +108,11 @@ dependencies {
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
   // Truvideo SDK
-  implementation 'com.github.Truvideo:truvideo-sdk-android-camera:78.1.16'
+  api 'com.github.Truvideo:truvideo-sdk-android-camera:79.1.1'
+
+  // AndroidX Lifecycle (required for LiveData.observeForever)
+  implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.7.0'
+  implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
 
   // AndroidX & Compose
   implementation 'com.google.android.material:material:1.12.0'
@@ -130,6 +147,35 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.7.1'
     implementation 'androidx.activity:activity:1.11.0'
 
+}
+
+// Fix for parseDebugLocalResources task issue
+afterEvaluate {
+  // Ensure parseDebugLocalResources creates the required output file
+  tasks.matching { it.name.contains("parseDebugLocalResources") || it.name.contains("parseReleaseLocalResources") }.configureEach { task ->
+    task.doLast {
+      def buildType = task.name.contains("Debug") ? "debug" : "release"
+      def rDefFile = new File(project.buildDir, "intermediates/local_only_symbol_list/${buildType}/parse${buildType.capitalize()}LocalResources/R-def.txt")
+      if (!rDefFile.exists()) {
+        rDefFile.parentFile.mkdirs()
+        rDefFile.createNewFile()
+        rDefFile.text = "" // Create empty file
+      }
+    }
+  }
+  
+  // Ensure generateDebugRFile/generateReleaseRFile can handle missing file
+  tasks.matching { it.name.contains("generateDebugRFile") || it.name.contains("generateReleaseRFile") }.configureEach { task ->
+    task.doFirst {
+      def buildType = task.name.contains("Debug") ? "debug" : "release"
+      def rDefFile = new File(project.buildDir, "intermediates/local_only_symbol_list/${buildType}/parse${buildType.capitalize()}LocalResources/R-def.txt")
+      if (!rDefFile.exists()) {
+        rDefFile.parentFile.mkdirs()
+        rDefFile.createNewFile()
+        rDefFile.text = "" // Create empty file
+      }
+    }
+  }
 }
 
 
