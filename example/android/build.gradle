@@ -23,6 +23,12 @@ apply plugin: "com.facebook.react.rootproject"
 // Fix JVM target compatibility for all subprojects (including autolinked modules)
 // This ensures Kotlin and Java use the same JVM target (1.8)
 allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://www.jitpack.io' }
+    }
+    
     tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
         kotlinOptions {
             jvmTarget = '1.8'
