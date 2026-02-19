@@ -12671,11 +12671,11 @@ __metadata:
 
 "truvideo-react-camera-sdk@file:./..::locator=truvideo-react-camera-sdk-example%40workspace%3Aexample":
   version: 1.0.0
-  resolution: "truvideo-react-camera-sdk@file:./..#./..::hash=8f63be&locator=truvideo-react-camera-sdk-example%40workspace%3Aexample"
+  resolution: "truvideo-react-camera-sdk@file:./..#./..::hash=2fd8e0&locator=truvideo-react-camera-sdk-example%40workspace%3Aexample"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 956216ff3583e0729a3412f2a5c51061f770b315057bd2c454edde31b96fb007a9f9825bad8e5a63b1174839e1d4a2e58e4f9e3e9299895251d2e289d3b7aa83
+  checksum: 46868a4dc325d1b9e941321a986ede3c7926527e3a828aa4b30e8fb1ac335abbdf94e26e807c78c78252672e61f10d4ecc049b22e7853f0cc64126bcb037c769
   languageName: node
   linkType: hard
 
