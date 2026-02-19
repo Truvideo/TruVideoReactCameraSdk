@@ -1165,7 +1165,7 @@ PODS:
     - React-perflogger (= 0.74.3)
     - React-utils (= 0.74.3)
   - SocketRocket (0.7.0)
-  - truvideo-react-camera-sdk (0.1.0):
+  - truvideo-react-camera-sdk (1.0.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1185,9 +1185,9 @@ PODS:
     - React-utils
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - truvideo-sdk-camera (= 78.1.2)
+    - truvideo-sdk-camera (= 78.2.2)
     - Yoga
-  - truvideo-sdk-camera (78.1.2)
+  - truvideo-sdk-camera (78.2.2)
   - Yoga (0.0.0)
 
 DEPENDENCIES:
@@ -1422,8 +1422,8 @@ SPEC CHECKSUMS:
   React-utils: 595335727912553f56aad7f580254ce4ca95a09c
   ReactCommon: 57d127dbf2ca045a07604e13f51c8e97ba176e56
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
-  truvideo-react-camera-sdk: 9ad8262b4081499bfa55513aa15a3f7157f95b74
-  truvideo-sdk-camera: e758c7116bfca46677200bad157ecf0920eb64ec
+  truvideo-react-camera-sdk: 30128d8c951b774ec8cbe669685380a5634a290f
+  truvideo-sdk-camera: 5b37edca239b1f91dfa628a4fc2a7084ce1d0178
   Yoga: 04f1db30bb810187397fa4c37dd1868a27af229c
 
 PODFILE CHECKSUM: 9147ff9c0ce7217b59643c818b1d5d2cd5c4b983
