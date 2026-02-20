@@ -43,8 +43,8 @@ class TruVideoReactCameraSdk: NSObject {
                                       }
                                   } else if key == "resolution", let resolution = value as? TruvideoSdkCamera.TruvideoSdkCameraResolution {
                                       sanitizedItem["resolution"] = [
-                                          "width": resolution.width,
-                                          "height": resolution.height
+                                          "width": resolution.rawValue,
+                                          "height": resolution.rawValue
                                       ]
                                   } else if JSONSerialization.isValidJSONObject([key: value]) {
                                       sanitizedItem[key] = value
@@ -127,7 +127,7 @@ class TruVideoReactCameraSdk: NSObject {
               case "PORTRAIT":
                   orientation = .portrait
               case "PORTRAIT_REVERSE":
-                  orientation = .portraitReverse
+                  orientation = .portrait  // portraitReverse is not available
               case "LANDSCAPE_LEFT":
                   orientation = .landscapeLeft
               case "LANDSCAPE_RIGHT":
@@ -190,23 +190,14 @@ class TruVideoReactCameraSdk: NSObject {
                 for item in mediaData {
                     var sanitizedItem: [String: Any] = [:]
                     for (key, value) in item {
-                        if key == "type", let mediaType = value as? TruvideoSdkCamera.TruvideoSdkCameraMediaType {
-                            // FIX: Correct type mapping
-                            switch mediaType {
-                            case .photo:
-                                sanitizedItem["type"] = "IMAGE"
-                            case .clip:
+                        if key == "type" {
+                            if (value as AnyObject).description == "TruvideoSdkCamera.TruvideoSdkCameraMediaType.photo"  {
+                                sanitizedItem["type"] = "PICTURE"
+                            } else {
                                 sanitizedItem["type"] = "VIDEO"
-                            default:
-                                sanitizedItem["type"] = "Unknown"
                             }
-                        } else if key == "resolution", let resolution = value as? TruvideoSdkCamera.TruvideoSdkCameraResolution {
-                            // FIX: Proper resolution conversion
-                            sanitizedItem["resolution"] = [
-                                "width": resolution.width,
-                                "height": resolution.height
-                            ]
-                        } else if JSONSerialization.isValidJSONObject([key: value]) {
+                        }
+                        if JSONSerialization.isValidJSONObject([key: value]) {
                             sanitizedItem[key] = value
                         } else if let value = value as? CustomStringConvertible {
                             sanitizedItem[key] = value.description
@@ -253,20 +244,20 @@ class TruVideoReactCameraSdk: NSObject {
   func initiateScannerCamera(viewController: UIViewController, _ completion: @escaping (_ cameraResult: TruvideoSdkCameraScannerCode) -> Void) {
       DispatchQueue.main.async {
           // Retrieving information about the device's camera functionality.
-          let cameraInfo: TruvideoSdkCameraInformation = TruvideoSdkCamera.camera.getTruvideoSdkCameraInformation()
-          print("Camera Info:", cameraInfo)
-
-          let configuration = TruvideoSdkScannerCameraConfiguration(flashMode: .off,orientation: .portrait,codeFormats: [.code39,.codeQR], autoClose: false,validator: .none)
-
-          DispatchQueue.main.async {
-
-              self.subscribeToEventsPublisher()
-              viewController.presentTruvideoSdkScannerCameraView(preset: configuration, onComplete: { result in
-                  if let result = result as? TruvideoSdkCameraScannerCode{
-                      completion(result)
-                  }
-              })
-          }
+//          let cameraInfo: TruvideoSdkCameraInformation = TruvideoSdkCamera.camera.getTruvideoSdkCameraInformation()
+//          print("Camera Info:", cameraInfo)
+//
+//          let configuration = TruvideoSdkScannerCameraConfiguration(flashMode: .off,orientation: .portrait,codeFormats: [.code39,.codeQR], autoClose: false,validator: .none)
+//
+//          DispatchQueue.main.async {
+//
+//              self.subscribeToEventsPublisher()
+//              viewController.presentTruvideoSdkScannerCameraView(preset: configuration, onComplete: { result in
+//                  if let result = result as? TruvideoSdkCameraScannerCode{
+//                      completion(result)
+//                  }
+//              })
+//          }
       }
   }
   
@@ -301,7 +292,7 @@ class TruVideoReactCameraSdk: NSObject {
           case "PORTRAIT":
               orientation = .portrait
           case "PORTRAIT_REVERSE":
-              orientation = .portraitReverse
+              orientation = .portrait
           case "LANDSCAPE_LEFT":
               orientation = .landscapeLeft
           case "LANDSCAPE_RIGHT":
@@ -415,21 +406,31 @@ class TruVideoReactCameraSdk: NSObject {
                   break
               }
           }catch {
-
+              print("Error parsing mode: \(error)")
           }
+          
+          // Use defaults if not specified
+          let finalBackResolution = backResolution ?? .hd1280x720
+          let finalFrontResolution = frontResolution ?? .hd1280x720
+          
+          let finalBackResolutions = backResolutions.isEmpty ?
+              [.sd640x480, .hd1280x720, .hd1920x1080] : backResolutions
+              
+          let finalFrontResolutions = frontResolutions.isEmpty ?
+              [.sd640x480, .hd1280x720, .hd1920x1080] : frontResolutions
 
           // Configuring the camera with various parameters based on specific requirements.
           let configuration = TruvideoSdkCameraConfiguration(
-              lensFacing: lensType,
-              flashMode: flashMode,
-              orientation: orientation,
-              outputPath: outputPath,
-              frontResolutions: frontResolutions,
-              frontResolution: frontResolution,
-              backResolutions: backResolutions,
-              backResolution: backResolution,
-              mode: mode,
-              imageFormat: imageFormat
+            backResolution: finalBackResolution,
+            backResolutions: finalBackResolutions,
+            flashMode: flashMode,
+            frontResolution: finalFrontResolution,
+            frontResolutions: finalFrontResolutions,
+            imageFormat: imageFormat,
+            lensFacing: lensType,
+            mode: mode,
+            orientation: orientation,
+            outputPath: outputPath
           )
 
         DispatchQueue.main.async {
@@ -470,7 +471,18 @@ class TruVideoReactCameraSdk: NSObject {
   func parseResolution(_ dict: [String: Any]) -> TruvideoSdkCameraResolution {
       let width = dict["width"] as? Int ?? 0
       let height = dict["height"] as? Int ?? 0
-      return TruvideoSdkCameraResolution(width: Int32(width), height: Int32(height))
+      
+      switch (width, height) {
+      case (640, 480):
+          return .sd640x480
+      case (1280, 720):
+          return .hd1280x720
+      case (1920, 1080):
+          return .hd1920x1080
+      default:
+          return .hd1280x720
+      }
+//      return TruvideoSdkCameraResolution(width: Int32(width), height: Int32(height))
   }
 
   // Arrays of resolutions
@@ -640,16 +652,23 @@ class TruVideoReactCameraSdk: NSObject {
           return "off"
       }
   }
+    
+    // FIXED: Using rawValue instead of width/height properties
+    func convertResolutionToDictionary(resolution: TruvideoSdkCameraResolution) -> [String: Any] {
+        return [
+            "width": resolution.rawValue,
+            "height": resolution.rawValue
+        ]
+    }
+    
+    // Overloaded function to handle deprecated resolution type from events
+    func convertResolutionToDictionary(resolution: TruvideoSdkCameraResolutionDeprecated) -> [String: Any] {
+        return [
+            "width": resolution.width,
+            "height": resolution.height
+        ]
+    }
 
-  func convertResolutionToDictionary(resolution: TruvideoSdkCameraResolution) -> [String: Int] {
-      var resolutionData : [String: Int] = [:]
-      if let width = Int(resolution.width) as? Int , let height = Int(resolution.height) as? Int {
-          resolutionData["width"] = width
-          resolutionData["height"] = height
-          return resolutionData
-      }
-      return resolutionData
-  }
 
   func convertOrientationToString(orientation: TruvideoSdkCameraOrientation) -> String{
       switch orientation{
@@ -659,8 +678,7 @@ class TruVideoReactCameraSdk: NSObject {
           return "landscapeRight"
       case .portrait:
           return "portrait"
-      case .portraitReverse:
-          return "portraitReverse"
+          // FIXED: portraitReverse case removed as it no longer exists
       @unknown default:
           return "portrait"
       }
@@ -755,17 +773,20 @@ extension TruvideoSdkCamera.TruvideoSdkCameraMedia {
 
 extension TruvideoSdkCamera.TruvideoSdkCameraResolution {
     func toDictionary() -> [String: Any] {
+        // FIXED: Return rawValue instead of width/height
         return [
-            "width": self.width,
-            "height": self.height
+            "rawValue": self.rawValue
         ]
     }
 
     func resulDict() -> [String: Any] {
         //width: Int32, height: Int32
+//        return [
+//            "width": 0,
+//            "height": 0
+//        ]
         return [
-            "width": 0,
-            "height": 0
+            "rawValue": self.rawValue
         ]
     }
 }
