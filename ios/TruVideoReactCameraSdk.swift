@@ -42,10 +42,17 @@ class TruVideoReactCameraSdk: NSObject {
                                           sanitizedItem["type"] = "Unknown"
                                       }
                                   } else if key == "resolution", let resolution = value as? TruvideoSdkCamera.TruvideoSdkCameraResolution {
-                                      sanitizedItem["resolution"] = [
-                                          "width": resolution.rawValue,
-                                          "height": resolution.rawValue
-                                      ]
+                                      
+                                      let (width, height) = self.resolutionDimensions(fromPreset: resolution.rawValue)
+
+                                                                sanitizedItem["resolution"] = [
+                                                                    "width": width, //
+                                                                    "height": height //
+                                                                ]
+//                                      sanitizedItem["resolution"] = [
+//                                          "width": resolution.rawValue,
+//                                          "height": resolution.rawValue
+//                                      ]
                                   } else if JSONSerialization.isValidJSONObject([key: value]) {
                                       sanitizedItem[key] = value
                                   } else if let value = value as? CustomStringConvertible {
@@ -79,6 +86,29 @@ class TruVideoReactCameraSdk: NSObject {
       }
   }
   
+//    new function added
+    func resolutionDimensions(fromPreset preset: String) -> (width: Int, height: Int) {
+        let normalized = preset
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .lowercased()
+
+        switch normalized {
+        case "sd640x480":
+            return (640, 480)
+
+        case "hd1280x720":
+            return (1280, 720)
+
+        case "hd1920x1080":
+            return (1920, 1080)
+
+        case "fhd1920x1080":
+            return (1920, 1080)
+
+        default:
+            return (0, 0)
+        }
+    }
   
   @objc(environment:withRejecter:)
   public func environment(resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
