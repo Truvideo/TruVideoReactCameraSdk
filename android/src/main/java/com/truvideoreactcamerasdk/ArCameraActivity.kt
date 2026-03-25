@@ -106,11 +106,13 @@ class ArCameraActivity : AppCompatActivity() {
 
       val imageLimit : Int? = if(jsonMode.getString("imageLimit") != "" ) jsonMode.getString("imageLimit").toIntOrNullIfNotEmpty() else null
 
+      val autoClose : Boolean = jsonMode.optBoolean("autoClose", true)
+
       mode = when (jsonMode.optString("mode")) {
 
         "videoAndImage" -> when {
 
-          videoDurationLimit != null && mediaLimit != null ->
+          mediaLimit != null ->
 
             TruvideoSdkCameraMode.VideoAndImage(
 
@@ -124,7 +126,7 @@ class ArCameraActivity : AppCompatActivity() {
 
             )
 
-          videoDurationLimit != null && videoLimit != null && imageLimit != null ->
+          videoLimit != null && imageLimit != null ->
 
             TruvideoSdkCameraMode.VideoAndImage(
 
@@ -172,7 +174,7 @@ class ArCameraActivity : AppCompatActivity() {
 
         "singleImage" ->
 
-          TruvideoSdkCameraMode.SingleImage(autoClose = true)
+          TruvideoSdkCameraMode.SingleImage(autoClose = autoClose)
 
         "singleVideo" ->
 
@@ -180,7 +182,7 @@ class ArCameraActivity : AppCompatActivity() {
 
             durationLimit = videoDurationLimit,
 
-            autoClose = true
+            autoClose = autoClose
 
           )
 
@@ -190,7 +192,7 @@ class ArCameraActivity : AppCompatActivity() {
 
             videoDurationLimit = videoDurationLimit,
 
-            autoClose = true
+            autoClose = autoClose
 
           )
 

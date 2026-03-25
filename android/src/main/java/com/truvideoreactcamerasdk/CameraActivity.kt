@@ -294,11 +294,13 @@ class CameraActivity : ComponentActivity() {
 
       val imageLimit : Int? = jsonMode.optString("imageLimit").intOrNull()
 
+      val autoClose : Boolean = jsonMode.optBoolean("autoClose", true)
+
       mode = when(jsonMode.getString("mode")) {
 
         "videoAndImage" -> when {
 
-          videoDurationLimit != null && mediaLimit != null ->
+          mediaLimit != null ->
 
             TruvideoSdkCameraMode.VideoAndImage(
 
@@ -312,7 +314,7 @@ class CameraActivity : ComponentActivity() {
 
             )
 
-          videoDurationLimit != null && videoLimit != null && imageLimit != null ->
+          videoLimit != null && imageLimit != null ->
 
             TruvideoSdkCameraMode.VideoAndImage(
 
@@ -356,7 +358,7 @@ class CameraActivity : ComponentActivity() {
 
         "singleImage" ->
 
-          TruvideoSdkCameraMode.SingleImage(autoClose = true)
+          TruvideoSdkCameraMode.SingleImage(autoClose = autoClose)
 
         "singleVideo" ->
 
@@ -364,7 +366,7 @@ class CameraActivity : ComponentActivity() {
 
             durationLimit = videoDurationLimit,
 
-            autoClose = true
+            autoClose = autoClose
 
           )
 
@@ -374,7 +376,7 @@ class CameraActivity : ComponentActivity() {
 
             videoDurationLimit = videoDurationLimit,
 
-            autoClose = true
+            autoClose = autoClose
 
           )
 
