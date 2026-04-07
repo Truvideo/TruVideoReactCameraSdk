@@ -317,7 +317,7 @@ class TruVideoReactCameraSdk: NSObject {
 
           let flashMode: TruvideoSdkCameraFlashMode = flashModeString == "on" ? .on: .off
 
-          let orientation: TruvideoSdkCameraOrientation
+          let orientation: TruvideoSdkCameraOrientation?
           switch orientationString {
           case "PORTRAIT":
               orientation = .portrait
@@ -327,9 +327,11 @@ class TruVideoReactCameraSdk: NSObject {
               orientation = .landscapeLeft
           case "LANDSCAPE_RIGHT":
               orientation = .landscapeRight
+          case "Any", "ANY", "":
+              orientation = nil
           default:
               print("Unknown orientation:", orientationString)
-              return
+              orientation = nil              
           }
         // Front Resolutions
         let frontResolutions: [TruvideoSdkCameraResolution] = {
