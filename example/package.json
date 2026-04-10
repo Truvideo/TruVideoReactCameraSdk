@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@react-native/gradle-plugin": "^0.74.85",
+    "@trunpm/truvideo-react-core-sdk": "link:../../TruVideoReactCoreSdk",
     "react": "18.2.0",
     "react-native": "0.74.3",
     "truvideo-react-camera-sdk": "./.."

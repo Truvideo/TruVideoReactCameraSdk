@@ -1,0 +1,6 @@
+framework module TruvideoSdkCamera {
+  umbrella header "TruvideoSdkCamera.h"
+  export *
+
+  module * { export * }
+}
