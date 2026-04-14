@@ -3053,12 +3053,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@trunpm/truvideo-react-core-sdk@link:../../TruVideoReactCoreSdk::locator=truvideo-react-camera-sdk-example%40workspace%3Aexample":
-  version: 0.0.0-use.local
-  resolution: "@trunpm/truvideo-react-core-sdk@link:../../TruVideoReactCoreSdk::locator=truvideo-react-camera-sdk-example%40workspace%3Aexample"
-  languageName: node
-  linkType: soft
-
 "@tsconfig/node10@npm:^1.0.7":
   version: 1.0.12
   resolution: "@tsconfig/node10@npm:1.0.12"
@@ -12666,7 +12660,6 @@ __metadata:
     "@react-native/gradle-plugin": ^0.74.85
     "@react-native/metro-config": 0.74.85
     "@react-native/typescript-config": 0.74.85
-    "@trunpm/truvideo-react-core-sdk": "link:../../TruVideoReactCoreSdk"
     babel-plugin-module-resolver: ^5.0.0
     patch-package: ^8.0.1
     postinstall-postinstall: ^2.1.0
@@ -12678,12 +12671,12 @@ __metadata:
 
 "truvideo-react-camera-sdk@file:./..::locator=truvideo-react-camera-sdk-example%40workspace%3Aexample":
   version: 1.0.0
-  resolution: "truvideo-react-camera-sdk@file:./..#./..::hash=6cc317&locator=truvideo-react-camera-sdk-example%40workspace%3Aexample"
+  resolution: "truvideo-react-camera-sdk@file:./..#./..::hash=769d91&locator=truvideo-react-camera-sdk-example%40workspace%3Aexample"
   peerDependencies:
     "@trunpm/truvideo-react-core-sdk": "*"
     react: "*"
     react-native: "*"
-  checksum: a3d51a666274e540d32d90b43a0dc3a81dc8c76574d2a828e7eb252a82d26bb5d60c4d5938e41bd28183bce43e533bbbfb41fd5e7a2981973dc46d71f75bc808
+  checksum: a229ffd9151784e18d8217661b411610a81b6108bc9bbe387bbb52e483532bd0eeefc7ee1eecbbe26eb680f249e8ef43a03d3c3683c0f2f3063deabfb9bd9537
   languageName: node
   linkType: hard
 
