@@ -2,6 +2,7 @@ package com.truvideoreactcamerasdk
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
@@ -42,6 +43,7 @@ class CameraActivity : ComponentActivity() {
   var flashMode = TruvideoSdkCameraFlashMode.OFF
   var imageFormat = TruvideoSdkCameraImageFormat.JPEG
   var videoStabilizationEnabled = true
+  var streamingUpload = false
   var orientation: TruvideoSdkCameraOrientation? = null
   var mode: TruvideoSdkCameraMode = TruvideoSdkCameraMode.VideoAndImage()
   var frontResolutions : List<TruvideoSdkCameraResolution> = listOf()
@@ -189,6 +191,10 @@ class CameraActivity : ComponentActivity() {
       }
     }
     checkConfigure()
+    Log.d(
+      "CameraActivity",
+      "launching camera: lensFacing=$lensFacing flashMode=$flashMode orientation=$orientation imageFormat=$imageFormat streamingUpload=$streamingUpload"
+    )
     val configuration = TruvideoSdkCameraConfiguration(
       lensFacing = lensFacing,
       flashMode = flashMode,
@@ -200,7 +206,8 @@ class CameraActivity : ComponentActivity() {
       backResolution = backResolution,
       mode = mode,
       imageFormat = imageFormat,
-      videoStabilizationEnabled = videoStabilizationEnabled
+      videoStabilizationEnabled = videoStabilizationEnabled,
+      streamingUpload = streamingUpload
     )
 
     cameraScreen.launch(configuration)
@@ -258,6 +265,13 @@ class CameraActivity : ComponentActivity() {
       when(jsonConfiguration.getString("videoStabilizationEnabled")){
         "true" -> videoStabilizationEnabled = true
         "false" -> videoStabilizationEnabled = false
+      }
+    }
+
+    if (jsonConfiguration.has("streamUpload")) {
+      streamingUpload = when (val streamUploadValue = jsonConfiguration.get("streamUpload")) {
+        is Boolean -> streamUploadValue
+        else -> streamUploadValue.toString().equals("true", ignoreCase = true)
       }
     }
 

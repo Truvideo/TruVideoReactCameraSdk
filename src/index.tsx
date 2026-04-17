@@ -39,6 +39,7 @@ interface Configuration {
   backResolution: Resolution | string;
   mode: string;
   imageFormat: String;
+  streamUpload?: boolean;
 }
 interface ARConfiguration {
   outputPath: string;
@@ -84,6 +85,7 @@ export async function initCameraScreen(
     backResolution: configuration.backResolution != null ? configuration.backResolution : "",
     mode: JSON.stringify(data),
     imageFormat: configuration.imageFormat != null ? configuration.imageFormat : ImageFormat.JPEG,
+    streamUpload: configuration.streamUpload ?? false,
   }
   return TruVideoReactCameraSdk.initCameraScreen(
     JSON.stringify(cameraConfiguration)
@@ -179,6 +181,7 @@ export interface CameraConfiguration {
   backResolution: Resolution | null;
   mode: CameraMode;
   imageFormat?: ImageFormat;
+  streamUpload?: boolean;
 }
 export interface ARCameraConfiguration {
   outputPath: string;
