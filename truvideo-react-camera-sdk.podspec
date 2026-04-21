@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
 
    s.vendored_frameworks = [
     'ios/xcframeworks/TruvideoSdkCamera.xcframework',
-    'ios/xcframeworks/TruVideoMediaUpload.xcframework' 
+    'ios/xcframeworks/TruVideoMediaUpload.xcframework',
   ]
   
   s.dependency 'truvideo-react-core-sdk'

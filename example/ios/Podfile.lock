@@ -1267,7 +1267,7 @@ DEPENDENCIES:
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - truvideo-react-camera-sdk (from `../..`)
-  - "truvideo-react-core-sdk (from `../node_modules/@trunpm/truvideo-react-core-sdk`)"
+  - truvideo-react-core-sdk (from `/Users/mac/Documents/hemant/Truvideo-RN-Project/SDK-Module/TruVideoReactCoreSdk`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -1385,7 +1385,7 @@ EXTERNAL SOURCES:
   truvideo-react-camera-sdk:
     :path: "../.."
   truvideo-react-core-sdk:
-    :path: "../node_modules/@trunpm/truvideo-react-core-sdk"
+    :path: "/Users/mac/Documents/hemant/Truvideo-RN-Project/SDK-Module/TruVideoReactCoreSdk"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -1444,10 +1444,10 @@ SPEC CHECKSUMS:
   React-utils: a06061b3887c702235d2dac92dacbd93e1ea079e
   ReactCommon: f00e436b3925a7ae44dfa294b43ef360fbd8ccc4
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
-  truvideo-react-camera-sdk: c609bd210770ae22b6e4b4e191e64927ac21e702
+  truvideo-react-camera-sdk: 409dd349018efa9a08f060ee28a2b346c21e1bf8
   truvideo-react-core-sdk: 144d1deedab99d2d4f6b34fee219c34dcd0491e4
   Yoga: 04f1db30bb810187397fa4c37dd1868a27af229c
 
-PODFILE CHECKSUM: 9147ff9c0ce7217b59643c818b1d5d2cd5c4b983
+PODFILE CHECKSUM: 0d64ab9c037fd375f01f835cb2cea339dff93adb
 
 COCOAPODS: 1.16.2
