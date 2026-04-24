@@ -1444,7 +1444,7 @@ SPEC CHECKSUMS:
   React-utils: a06061b3887c702235d2dac92dacbd93e1ea079e
   ReactCommon: f00e436b3925a7ae44dfa294b43ef360fbd8ccc4
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
-  truvideo-react-camera-sdk: 409dd349018efa9a08f060ee28a2b346c21e1bf8
+  truvideo-react-camera-sdk: c609bd210770ae22b6e4b4e191e64927ac21e702
   truvideo-react-core-sdk: 144d1deedab99d2d4f6b34fee219c34dcd0491e4
   Yoga: 04f1db30bb810187397fa4c37dd1868a27af229c
 
