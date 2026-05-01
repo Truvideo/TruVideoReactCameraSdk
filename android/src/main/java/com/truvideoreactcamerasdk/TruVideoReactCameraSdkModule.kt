@@ -9,6 +9,8 @@ import com.facebook.react.bridge.Promise
 import com.truvideo.sdk.camera.TruvideoSdkCamera
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import java.io.IOException
+import java.util.Properties
 
 class TruVideoReactCameraSdkModule(reactContext: ReactApplicationContext)  :
   ReactContextBaseJavaModule(reactContext) {
@@ -20,6 +22,7 @@ class TruVideoReactCameraSdkModule(reactContext: ReactApplicationContext)  :
 
 
   companion object {
+    private const val VERSION_CAMERA_ASSET = "version-camera.properties"  // add this line
     lateinit var reactContext : ReactApplicationContext
     const val NAME = "TruVideoReactCameraSdk"
     var promise2 : Promise? = null
@@ -27,15 +30,36 @@ class TruVideoReactCameraSdkModule(reactContext: ReactApplicationContext)  :
 
 
 
+//  @ReactMethod
+//  fun version(promise: Promise){
+//    promise.resolve(TruvideoSdkCamera.version)
+//  }
+//
+//  @ReactMethod
+//  fun environment(promise: Promise){
+//    promise.resolve(TruvideoSdkCamera.environment)
+//  }
+
+  // ✅ Fix: Read from properties file instead of TruvideoSdkCamera.version
+  private fun readSdkCameraManifestProperty(key: String): String? =
+    try {
+      Properties().apply {
+        reactApplicationContext.assets.open(VERSION_CAMERA_ASSET).use { load(it) }
+      }.getProperty(key)
+    } catch (_: IOException) {
+      null
+    }
+
   @ReactMethod
-  fun version(promise: Promise){
-    promise.resolve(TruvideoSdkCamera.version)
+  fun version(promise: Promise) {
+    promise.resolve(readSdkCameraManifestProperty("versionName").orEmpty())
   }
 
   @ReactMethod
-  fun environment(promise: Promise){
-    promise.resolve(TruvideoSdkCamera.environment)
+  fun environment(promise: Promise) {
+    promise.resolve(readSdkCameraManifestProperty("environment").orEmpty())
   }
+
 
   @ReactMethod
   fun isAugmentedRealityInstalled(promise: Promise){

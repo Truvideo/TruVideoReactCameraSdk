@@ -95,7 +95,8 @@ dependencies {
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
   // Truvideo SDK
-  implementation 'com.github.Truvideo:truvideo-sdk-android-camera:79.2.1'
+  // implementation 'com.github.Truvideo:truvideo-sdk-android-camera:79.2.1'
+  implementation("com.truvideo.com:sdk-camera:1.0.0")
 
   // AndroidX & Compose
   implementation 'com.google.android.material:material:1.12.0'
