@@ -63,6 +63,14 @@ export interface CameraResult {
   duration: number;
 }
 
+// camera information interface
+export interface CameraInformation {
+  hasFrontCamera: boolean;
+  hasBackCamera: boolean;
+  frontResolutions: Resolution[];
+  backResolutions: Resolution[];
+}
+
 export async function initCameraScreen(
   configuration: CameraConfiguration
 ): Promise<CameraResult[] | null> {
@@ -142,6 +150,19 @@ export function isAugmentedRealitySupported(): Promise<string> {
 
 export function requestInstallAugmentedReality(): Promise<string> {
   return TruVideoReactCameraSdk.requestInstallAugmentedReality();
+}
+
+// New method to get camera information
+export async function getCameraInformation(): Promise<CameraInformation | null> {
+  return TruVideoReactCameraSdk.getCameraInformation().then((response: string) => {
+    try {
+      const parsed: CameraInformation = JSON.parse(response);
+      return parsed;
+    } catch (e) {
+      console.error("Failed to parse CameraInformation JSON:", e);
+      return null;
+    }
+  });
 }
 
 export enum LensFacing {

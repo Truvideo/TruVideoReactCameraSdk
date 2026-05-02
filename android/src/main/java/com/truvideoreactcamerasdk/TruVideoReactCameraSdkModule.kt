@@ -128,4 +128,18 @@ class TruVideoReactCameraSdkModule(reactContext: ReactApplicationContext)  :
         promise.reject("E_ACTIVITY_DOES_NOT_EXIST", "Activity doesn't exist")
     }
   }
+
+  @ReactMethod
+fun getCameraInformation(promise: Promise) {
+    try {
+        val info = TruvideoSdkCamera.getInformation()
+        promise.resolve(info.toJson())
+    } catch (e: Exception) {
+        promise.reject(
+            "CAMERA_ERROR",
+            e.message ?: "Failed to get camera information",
+            e
+        )
+    }
+}
 }

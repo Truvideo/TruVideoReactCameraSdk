@@ -775,6 +775,36 @@ class TruVideoReactCameraSdk: NSObject {
 }
 
 
+// MARK: - Camera Information
+@objc(getCameraInformation:withRejecter:)
+public func getCameraInformation(resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+    do {
+        let info = TruvideoSdkCamera.camera.getTruvideoSdkCameraInformation()
+        
+        let infoDict: [String: Any] = [
+            "hasFrontCamera": info.hasCamera(.front),
+            "hasBackCamera": info.hasCamera(.back),
+            "frontResolutions": info.resolutions(for: .front).map { res in
+                let (width, height) = resolutionDimensions(fromPreset: res.rawValue)
+                return ["width": width, "height": height]
+            },
+            "backResolutions": info.resolutions(for: .back).map { res in
+                let (width, height) = resolutionDimensions(fromPreset: res.rawValue)
+                return ["width": width, "height": height]
+            }
+        ]
+        
+        if let jsonData = try? JSONSerialization.data(withJSONObject: infoDict, options: []),
+           let jsonString = String(data: jsonData, encoding: .utf8) {
+            resolve(jsonString)
+        } else {
+            reject("SERIALIZATION_ERROR", "Failed to serialize camera information", NSError(domain: "SERIALIZATION_ERROR", code: 500, userInfo: nil))
+        }
+    } catch {
+        reject("CAMERA_ERROR", error.localizedDescription.isEmpty ? "Failed to get camera information" : error.localizedDescription, error)
+    }
+}
+
 
 
 
