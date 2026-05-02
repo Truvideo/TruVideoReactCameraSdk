@@ -10,7 +10,7 @@ import com.truvideo.sdk.camera.TruvideoSdkCamera
 import com.truvideo.sdk.camera.model.TruvideoSdkArCameraConfiguration
 import com.truvideo.sdk.camera.model.external.TruvideoSdkCameraMode
 import com.truvideo.sdk.camera.model.TruvideoSdkCameraOrientation
-import com.truvideo.sdk.camera.ui.activities.arcamera.TruvideoSdkArCameraContract
+import com.truvideo.sdk.camera.ui.activities.proposal.TruvideoSdkNewArCameraContract
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -30,7 +30,7 @@ class ArCameraActivity : AppCompatActivity() {
         }
 
       val configuration = intent.getStringExtra("configuration")!!
-      launcher = registerForActivityResult(TruvideoSdkArCameraContract()){
+      launcher = registerForActivityResult(TruvideoSdkNewArCameraContract()){
         //val jsonArray = Json.encodeToString(ListSerializer(TruvideoSdkCameraMedia.serializer()),it)
         val jsonArray = JSONArray()
         it.forEach { media ->
