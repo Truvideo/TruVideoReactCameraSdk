@@ -461,8 +461,7 @@ class TruVideoReactCameraSdk: NSObject {
             imageFormat: imageFormat,
             lensFacing: lensType,
             mode: mode,
-            // orientation: orientation,
-            orientation: nil,
+            orientation: orientation,
             outputPath: outputPath
           )
 
