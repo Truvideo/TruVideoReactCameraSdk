@@ -156,8 +156,8 @@ class TruVideoReactCameraSdk: NSObject {
               switch orientationString {
               case "PORTRAIT":
                   orientation = .portrait
-            //   case "PORTRAIT_REVERSE":
-            //       orientation = .portrait  // portraitReverse is not available
+              case "PORTRAIT_REVERSE":
+                  orientation = .portrait  // portraitReverse is not available
               case "LANDSCAPE_LEFT":
                   orientation = .landscapeLeft
               case "LANDSCAPE_RIGHT":
@@ -321,8 +321,8 @@ class TruVideoReactCameraSdk: NSObject {
           switch orientationString {
           case "PORTRAIT":
               orientation = .portrait
-          case "PORTRAIT_REVERSE":
-              orientation = .portrait
+        //   case "PORTRAIT_REVERSE":
+        //       orientation = .portrait
           case "LANDSCAPE_LEFT":
               orientation = .landscapeLeft
           case "LANDSCAPE_RIGHT":
