@@ -9,6 +9,19 @@ import Combine
 class TruVideoReactCameraSdk: NSObject {
     
   var disposeBag = Set<AnyCancellable>()
+
+  // The JS layer sends duration limits in milliseconds.
+  // The iOS SDK expects whole-second values, so convert here before building the mode.
+  private func videoDurationSeconds(fromMilliseconds value: String?) -> Int? {
+      guard let value = value,
+            let milliseconds = Int64(value),
+            milliseconds > 0 else {
+          return nil
+      }
+
+      return Int((milliseconds + 999) / 1000)
+  }
+
     @objc(initCameraScreen:withResolver:withRejecter:)
     public func initCameraScreen(jsonData: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
       print(jsonData)
@@ -172,13 +185,17 @@ class TruVideoReactCameraSdk: NSObject {
                   mode = .videoAndPicture(
                     videoCount: videoLimit.flatMap { Int($0) },
                     pictureCount: imageLimit.flatMap { Int($0) },
-                    videoDuration: videoDurationLimit.flatMap { Int($0) }
+                    videoDuration: self.videoDurationSeconds(fromMilliseconds: videoDurationLimit)
                   )
                 }else if mediaLimit != nil {
                   let mediaLimitInt = Int(mediaLimit ?? "0") ?? 0
                   mode = .videoAndPicture(
                     mediaCount: mediaLimitInt,
-                    videoDuration: videoDurationLimit.flatMap { Int($0) }
+                    videoDuration: self.videoDurationSeconds(fromMilliseconds: videoDurationLimit)
+                  )
+                } else if videoDurationLimit != nil {
+                  mode = .videoAndPicture(
+                    videoDuration: self.videoDurationSeconds(fromMilliseconds: videoDurationLimit)
                   )
                 }else {
                   mode = .videoAndPicture()
@@ -186,7 +203,7 @@ class TruVideoReactCameraSdk: NSObject {
               case "video":
                 mode = .video(
                   videoCount :videoLimit.flatMap { Int($0) },
-                  videoDuration: videoDurationLimit.flatMap { Int($0) }
+                  videoDuration: self.videoDurationSeconds(fromMilliseconds: videoDurationLimit)
                 )
               case "image":
                 mode = .picture(
@@ -196,11 +213,11 @@ class TruVideoReactCameraSdk: NSObject {
                   mode = .singlePicture()
               case "singleVideo":
                 mode = .singleVideo(
-                  videoDuration : videoDurationLimit.flatMap { Int($0) }
+                  videoDuration : self.videoDurationSeconds(fromMilliseconds: videoDurationLimit)
                 )
               case "singleVideoOrImage":
                 mode = .singleVideoOrPicture(
-                  videoDuration : videoDurationLimit.flatMap { Int($0) }
+                  videoDuration : self.videoDurationSeconds(fromMilliseconds: videoDurationLimit)
                 )
 
               default:
@@ -404,13 +421,17 @@ class TruVideoReactCameraSdk: NSObject {
                   mode = .videoAndPicture(
                     videoCount: videoLimit.flatMap { Int($0) },
                     pictureCount: imageLimit.flatMap { Int($0) },
-                    videoDuration: videoDurationLimit.flatMap { Int($0) }
+                    videoDuration: self.videoDurationSeconds(fromMilliseconds: videoDurationLimit)
                   )
                 }else if mediaLimit != nil {
                   let mediaLimitInt = Int(mediaLimit ?? "0") ?? 0
                   mode = .videoAndPicture(
                     mediaCount: mediaLimitInt,
-                    videoDuration: videoDurationLimit.flatMap { Int($0) }
+                    videoDuration: self.videoDurationSeconds(fromMilliseconds: videoDurationLimit)
+                  )
+                } else if videoDurationLimit != nil {
+                  mode = .videoAndPicture(
+                    videoDuration: self.videoDurationSeconds(fromMilliseconds: videoDurationLimit)
                   )
                 }else {
                   mode = .videoAndPicture()
@@ -418,7 +439,7 @@ class TruVideoReactCameraSdk: NSObject {
               case "video":
                 mode = .video(
                   videoCount :videoLimit.flatMap { Int($0) },
-                  videoDuration: videoDurationLimit.flatMap { Int($0) }
+                  videoDuration: self.videoDurationSeconds(fromMilliseconds: videoDurationLimit)
                 )
               case "image":
                 mode = .picture(
@@ -428,11 +449,11 @@ class TruVideoReactCameraSdk: NSObject {
                   mode = .singlePicture()
               case "singleVideo":
                 mode = .singleVideo(
-                  videoDuration : videoDurationLimit.flatMap { Int($0) }
+                  videoDuration : self.videoDurationSeconds(fromMilliseconds: videoDurationLimit)
                 )
               case "singleVideoOrImage":
                 mode = .singleVideoOrPicture(
-                  videoDuration : videoDurationLimit.flatMap { Int($0) }
+                  videoDuration : self.videoDurationSeconds(fromMilliseconds: videoDurationLimit)
                 )
               default:
                   break
@@ -882,5 +903,3 @@ extension TruvideoSdkCamera.TruvideoSdkCameraResolution {
         ]
     }
 }
-
-
