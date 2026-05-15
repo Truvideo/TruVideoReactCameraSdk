@@ -1187,7 +1187,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - truvideo-react-core-sdk
     - Yoga
-  - truvideo-react-core-sdk (1.0.0-beta.1):
+  - truvideo-react-core-sdk (1.0.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1445,7 +1445,7 @@ SPEC CHECKSUMS:
   ReactCommon: f00e436b3925a7ae44dfa294b43ef360fbd8ccc4
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   truvideo-react-camera-sdk: c609bd210770ae22b6e4b4e191e64927ac21e702
-  truvideo-react-core-sdk: 144d1deedab99d2d4f6b34fee219c34dcd0491e4
+  truvideo-react-core-sdk: 7bcf486f59aef2aa3a5530e43a398c88c836cf8a
   Yoga: 04f1db30bb810187397fa4c37dd1868a27af229c
 
 PODFILE CHECKSUM: 0d64ab9c037fd375f01f835cb2cea339dff93adb
